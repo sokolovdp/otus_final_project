@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+
+    <div class="alert alert-success text-center" role="alert">
+        Home page
+    </div>
+
+    <div class="media text-center">
+        <img src="{% static 'dog_surprize.jpg' %}" class="img-fluid mx-auto d-block"
+             alt="Responsive image">
+    </div>
+
+{% endblock %}

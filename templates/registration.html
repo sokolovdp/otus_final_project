@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+
+    {% if registered %}
+        <div class="alert alert-success text-center" role="alert">
+            You are registered
+        </div>
+    {% elif errors %}
+        <div class="alert alert-danger text-center" role="alert">
+            {{ errors }}
+        </div>
+    {% else %}
+        <div class="alert alert-dark text-center" role="alert">
+            Registration page
+        </div>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-6">
+                    {{ user_form.username|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                    {{ user_form.password|as_crispy_field }}
+                </div>
+            </div>
+            {{ user_form.email|as_crispy_field }}
+            {{ profile_form|crispy }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    {% endif %}
+
+{% endblock %}
