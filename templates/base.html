@@ -29,9 +29,9 @@
                 <a class="nav-item nav-link" href="{% url 'main_app:user_logout' %}">Logout</a>
             {% else %}
                 {% if active == 'register' %}
-                    <a class="nav-item nav-link active" href="{% url 'main_app:register' %}">Register</a>
+                    <a class="nav-item nav-link active" href="{% url 'main_app:user_register' %}">Register</a>
                 {% else %}
-                    <a class="nav-item nav-link" href="{% url 'main_app:register' %}">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'main_app:user_register' %}">Register</a>
                 {% endif %}
                 {% if active == 'login' %}
                     <a class="nav-item nav-link active" href="{% url 'main_app:user_login' %}">Login</a>

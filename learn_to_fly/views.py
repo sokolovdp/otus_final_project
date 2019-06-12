@@ -43,7 +43,7 @@ def user_login(request):
     return render(request, 'login.html', context=context)
 
 
-def register(request):
+def user_register(request):
     registered = False
     errors_string = None
 

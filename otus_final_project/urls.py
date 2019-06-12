@@ -20,12 +20,14 @@ from .settings import DEBUG
 
 import learn_to_fly.urls
 from learn_to_fly.views import index_view
+import api.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', index_view, name='index'),
     path('index/', index_view, name='index'),
     path('learn/', include(learn_to_fly.urls)),
+    # path('api/v1/', include(api.urls)),
 ]
 
 
