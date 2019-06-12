@@ -27,7 +27,7 @@ urlpatterns = [
     path('', index_view, name='index'),
     path('index/', index_view, name='index'),
     path('learn/', include(learn_to_fly.urls)),
-    # path('api/v1/', include(api.urls)),
+    path('api/v1/', include(api.urls)),
 ]
 
 
