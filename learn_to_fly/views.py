@@ -18,6 +18,7 @@ def index_view(request):
 @login_required
 def user_logout(request):
     logout(request)
+    django_logger.info(f'successful user logout: "{request.user.username}"')
     return HttpResponseRedirect(reverse('index'))
 
 
@@ -32,8 +33,10 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                django_logger.info(f'successful user login: "{user.username}"')
                 return HttpResponseRedirect(reverse('index'))
             else:
+                django_logger.info(f'try to login not active user: "{user.username}"')
                 errors_string = 'ACCOUNT IS NOT ACTIVE!'
         else:
             django_logger.info(f'invalid login: "{username}" password: "{password}"')
@@ -83,4 +86,5 @@ def user_register(request):
         'profile_form': profile_form,
         'registered': registered
     }
+    django_logger.info(f'successful user regisration: "{user_form.username}"')
     return render(request, 'registration.html', context=context)

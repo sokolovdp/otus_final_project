@@ -22,7 +22,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class RegisterUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=40)
     password = serializers.CharField(max_length=20)
-    email = serializers.CharField(max_length=20, required=False, allow_blank=True, allow_null=True, default='')
+    email = serializers.CharField(max_length=80)
     first_name = serializers.CharField(max_length=80)
     last_name = serializers.CharField(max_length=80)
+
+
+class UserUpdateSerializer(serializers.Serializer):
+    pk = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects)
+    username = serializers.CharField(max_length=40, required=False)
+    password = serializers.CharField(max_length=20, required=False)
+    email = serializers.CharField(max_length=80, required=False)
+    first_name = serializers.CharField(max_length=80, required=False)
+    last_name = serializers.CharField(max_length=80, required=False)
+
 
