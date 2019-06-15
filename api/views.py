@@ -7,10 +7,10 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 
-from main_page.forms import UserForm, UserProfileForm
-from main_page.models import UserProfile
+from main_page.forms import UserForm, StudentProfileForm
+from main_page.models import StudentProfile
 
-from api.serializers import UserProfileSerializer, RegisterUserSerializer, UserUpdateSerializer
+from api.serializers import StudentProfileSerializer, RegisterUserSerializer, UserUpdateSerializer
 
 from otus_final_project.settings import django_logger
 
@@ -39,8 +39,8 @@ class UserProfileViewSet(ViewSet):
             permission_classes = (AllowAny, )
         return [permission() for permission in permission_classes]
 
-    queryset = UserProfile.objects
-    user_profile_serializer = UserProfileSerializer
+    queryset = StudentProfile.objects
+    student_profile_serializer = StudentProfileSerializer
     user_register_serializer = RegisterUserSerializer
     user_update_serializer = UserUpdateSerializer
 
@@ -50,7 +50,7 @@ class UserProfileViewSet(ViewSet):
         try:
             with transaction.atomic():
                 user_form = UserForm(data=serializer.validated_data)
-                profile_form = UserProfileForm(data=dict(profile_pic=None, category='student'))
+                profile_form = StudentProfileForm(data=dict(profile_pic=None, category='student'))
                 new_user = user_form.save()
                 new_user.set_password(new_user.password)  # hash password
                 new_user.save()
@@ -63,15 +63,15 @@ class UserProfileViewSet(ViewSet):
             return Response(serializer.validated_data)
 
     def list(self, request):
-        serializer = self.user_profile_serializer(self.queryset, many=True)
+        serializer = self.student_profile_serializer(self.queryset, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        user = request.user
-        userprofile = request.user.userprofile
-        if user.is_staff or userprofile.id == int(pk):  # user can see his own profile data
-            user = self.queryset.filter(id=pk).first()
-            return Response(self.user_profile_serializer(user).data)
+        user_ = request.user
+        student_profile = request.user.userprofile
+        if user_.is_staff or student_profile.id == int(pk):  # user can see his own profile data
+            user_ = self.queryset.filter(id=pk).first()
+            return Response(self.student_profile_serializer(user_).data)
         else:
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -80,8 +80,8 @@ class UserProfileViewSet(ViewSet):
         serializer = self.user_update_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user_new_data = serializer.validated_data
-        user_profile = user_new_data.pop('pk')
-        user_ = user_profile.user
+        student_profile = user_new_data.pop('pk')
+        user_ = student_profile.user
         try:
             with transaction.atomic():
                 for attr, value in user_new_data.items():
@@ -99,7 +99,7 @@ class UserProfileViewSet(ViewSet):
         user_ = self.queryset.filter(pk=pk).first()
         if user_:
             user_.delete()
-            return Response(self.user_profile_serializer(user_).data)
+            return Response(self.student_profile_serializer(user_).data)
         else:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
 

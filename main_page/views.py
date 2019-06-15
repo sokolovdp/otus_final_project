@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import UserForm, UserProfileForm
+from .forms import UserForm, StudentProfileForm
 from otus_final_project.settings import django_logger
 
 # Create your views here.
@@ -52,7 +52,7 @@ def user_register(request):
 
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
-        profile_form = UserProfileForm(data=request.POST)
+        profile_form = StudentProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
@@ -67,6 +67,7 @@ def user_register(request):
 
             profile.save()
             registered = True
+            django_logger.info('successful user registration!')
         else:
             all_errors = []
             for err_list in user_form.errors.values():
@@ -77,7 +78,7 @@ def user_register(request):
     else:
         registered = True if request.user.username else False
         user_form = UserForm()
-        profile_form = UserProfileForm()
+        profile_form = StudentProfileForm()
 
     context = {
         'active': 'register',
@@ -86,5 +87,4 @@ def user_register(request):
         'profile_form': profile_form,
         'registered': registered
     }
-    django_logger.info(f'successful user regisration: "{user_form.username}"')
     return render(request, 'registration.html', context=context)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from django.contrib.auth.models import User
-from main_page.models import UserProfile
+from main_page.models import StudentProfile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,11 +11,11 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
+class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     class Meta:
-        model = UserProfile
+        model = StudentProfile
         fields = '__all__'
 
 
@@ -28,7 +28,7 @@ class RegisterUserSerializer(serializers.Serializer):
 
 
 class UserUpdateSerializer(serializers.Serializer):
-    pk = serializers.PrimaryKeyRelatedField(queryset=UserProfile.objects)
+    pk = serializers.PrimaryKeyRelatedField(queryset=StudentProfile.objects)
     username = serializers.CharField(max_length=40, required=False)
     password = serializers.CharField(max_length=20, required=False)
     email = serializers.CharField(max_length=80, required=False)

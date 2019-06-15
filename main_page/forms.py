@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import UserProfile
+from .models import StudentProfile
 
 
 class UserForm(forms.ModelForm):
@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'first_name', 'last_name')
 
 
-class UserProfileForm(forms.ModelForm):
+class StudentProfileForm(forms.ModelForm):
     class Meta:
-        model = UserProfile
+        model = StudentProfile
         fields = ('profile_pic', 'category')

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from main_page.models import UserProfile
+from main_page.models import StudentProfile
 
 # Register your models here.
-admin.site.register(UserProfile)
+admin.site.register(StudentProfile)
