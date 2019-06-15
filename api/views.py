@@ -2,7 +2,7 @@ from django.db import transaction, IntegrityError, DatabaseError
 
 from rest_framework.viewsets import ViewSet
 from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -19,10 +19,12 @@ class UserProfileViewSet(ViewSet):
         """
         Instantiates and returns the list of permissions that this view requires.
         """
-        if self.action == 'create':
-            permission_classes = [AllowAny]
+        if self.action in ('create', 'destroy', 'update'):
+            permission_classes = [IsAdminUser]
+        elif self.action in ('retrive', ):
+            permission_classes = [IsAuthenticated, ]
         else:
-            permission_classes = [IsAuthenticated]
+            permission_classes = [AllowAny, ]
         return [permission() for permission in permission_classes]
 
     queryset = UserProfile.objects
@@ -58,7 +60,7 @@ class UserProfileViewSet(ViewSet):
     def update(self, request, pk=None):
         user = self.queryset.filter(pk=pk).first()
         if user:
-            serializer = self.user_serializer(user, data=request.data)
+            serializer = self.user_register_serializer(user, data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data)
