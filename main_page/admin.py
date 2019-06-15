@@ -1,5 +1,5 @@
 from django.contrib import admin
-from learn_to_fly.models import UserProfile
+from main_page.models import UserProfile
 
 # Register your models here.
 admin.site.register(UserProfile)

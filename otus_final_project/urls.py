@@ -18,15 +18,15 @@ from django.urls import path, include
 
 from .settings import DEBUG
 
-import learn_to_fly.urls
-from learn_to_fly.views import index_view
+import main_page.urls
+from main_page.views import index_view
 import api.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', index_view, name='index'),
     path('index/', index_view, name='index'),
-    path('learn/', include(learn_to_fly.urls)),
+    path('learn/', include(main_page.urls)),
     path('api/v1/', include(api.urls)),
 ]
 

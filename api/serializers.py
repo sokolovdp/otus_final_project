@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from django.contrib.auth.models import User
-from learn_to_fly.models import UserProfile
+from main_page.models import UserProfile
 
 
 class UserSerializer(serializers.ModelSerializer):

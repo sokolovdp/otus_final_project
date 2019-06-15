@@ -7,9 +7,9 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
 
-from learn_to_fly.forms import UserForm, UserProfileForm
+from main_page.forms import UserForm, UserProfileForm
+from main_page.models import UserProfile
 
-from learn_to_fly.models import UserProfile
 from api.serializers import UserProfileSerializer, RegisterUserSerializer, UserUpdateSerializer
 
 from otus_final_project.settings import django_logger

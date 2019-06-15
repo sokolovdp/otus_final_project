@@ -1,6 +1,6 @@
 from django.urls import path
 
-from learn_to_fly import views
+from main_page import views
 
 app_name = 'main_app'
 
