@@ -18,9 +18,23 @@ class Course(models.Model):
     title = models.CharField(max_length=400)
     number_of_lectures = models.IntegerField()
     description = models.TextField()
+    price = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
 
 
 class Lecture(models.Model):
     id = models.IntegerField(primary_key=True)
     course = models.ForeignKey(Course, related_name='lecture', on_delete=models.SET_NULL, null=True)
     number_in_course = models.IntegerField()
+
+
+class CourseRegistration(models.Model):
+    id = models.IntegerField(primary_key=True)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+
+
+class CourseSchedule(models.Model):
+    id = models.IntegerField(primary_key=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    start_date = models.DateField()
+
