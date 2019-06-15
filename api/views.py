@@ -17,8 +17,10 @@ from otus_final_project.settings import django_logger
 
 from rest_framework.authtoken.models import Token
 
+# Generate token for all registered and active users
 for user in User.objects.all():
-    Token.objects.get_or_create(user=user)
+    if user.is_active:
+        Token.objects.get_or_create(user=user)
 
 
 class UserProfileViewSet(ViewSet):
