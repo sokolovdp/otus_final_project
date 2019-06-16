@@ -126,7 +126,7 @@ class CourseViewSet(ViewSet):
             permission_classes = (AllowAny,)
         return [permission() for permission in permission_classes]
 
-    queryset = Course.objects.prefetch_related('lectures', 'schedules')
+    queryset = Course.objects.prefetch_related('lectures', 'schedules', 'registrations')
     course_serializer = CourseSerializer
 
     def create(self, request):

@@ -75,8 +75,16 @@ Django server will start at localhost:8000/
             "course": 2
         }
     ],
+    "registrations": [
+        {
+            "id": 2,
+            "student": 2,
+            "course": 2
+        }
+    ],
     "title": "Django 2.2 Master class",
     "number_of_lectures": 2,
-    "description": "mxncvmx vz,ncwfow ieowjfl aljdkslxcbkusrf wifuyipufy  apoifuspo idu sapoi saopifu sopidu  sodifusp oifu",
+    "description": "mxncvmx vz,ncwfow ieowjfl ...",
     "price": "145.50"
+}
 ```

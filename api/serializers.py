@@ -63,6 +63,7 @@ class CourseScheduleSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     lectures = LectureSerializer(many=True)
     schedules = CourseScheduleSerializer(many=True)
+    registrations = CourseRegistrationSerializer(many=True)
 
     class Meta:
         model = Course
