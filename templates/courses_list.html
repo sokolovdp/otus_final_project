@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block body_block %}
+    <h1>СПИСОК ТОВАРОВ</h1>
+    <ul class=items>
+        {%  if items %}
+            {% for item in items %}
+                <li><h2><a href="/main/item/{{ item.id }}">Название: <em>{{ item.name }}</em> &nbsp; &nbsp; Цена:
+                    <em>{{ item.price }}</em>
+                    руб.</a></h2>
+                    <img src="{% static item.image %}" alt="Embedded Image" style="height:50px;"/>
+            {% endfor %}
+        {% else %}
+             <li><em>Unbelievable. No entries here so far</em>
+        {% endif %}
+    </ul>
+    <br><br>
+    <a href="/">На главную страницу</a>
+    <br><br><br><br><br>
+{% endblock %}

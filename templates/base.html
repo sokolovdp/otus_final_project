@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>Otus by Sokol</title>
+    <title>Learn To Fly</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -26,23 +26,24 @@
                 <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
             {% endif %}
             {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="{% url 'main_app:user_logout' %}">Logout</a>
+                <a class="nav-item nav-link" href="{% url 'main_page:user_logout' %}">Logout</a>
+                <a class="nav-item nav-link" href="{% url 'main_page:courses_list' %}">Courses List</a>
             {% else %}
                 {% if active == 'register' %}
-                    <a class="nav-item nav-link active" href="{% url 'main_app:user_register' %}">Register</a>
+                    <a class="nav-item nav-link active" href="{% url 'main_page:user_register' %}">Register</a>
                 {% else %}
-                    <a class="nav-item nav-link" href="{% url 'main_app:user_register' %}">Register</a>
+                    <a class="nav-item nav-link" href="{% url 'main_page:user_register' %}">Register</a>
                 {% endif %}
                 {% if active == 'login' %}
-                    <a class="nav-item nav-link active" href="{% url 'main_app:user_login' %}">Login</a>
+                    <a class="nav-item nav-link active" href="{% url 'main_page:user_login' %}">Login</a>
                 {% else %}
-                    <a class="nav-item nav-link" href="{% url 'main_app:user_login' %}">Login</a>
+                    <a class="nav-item nav-link" href="{% url 'main_page:user_login' %}">Login</a>
                 {% endif %}
             {% endif %}
         </div>
 
     </div>
-    <span class="navbar-text">Training site for Otus Web Developer 2019 course</span>
+    <span class="navbar-text">Demo Learning Site developed during Otus Web Developer 2019 course</span>
 </nav>
 
 <div class="jumbotron jumbotron-fluid">

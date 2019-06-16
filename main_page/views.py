@@ -6,6 +6,13 @@ from django.contrib.auth import authenticate, login, logout
 
 from .forms import UserForm, StudentProfileForm
 from otus_final_project.settings import django_logger
+from main_page.models import (
+    Course,
+    # CourseRegistration,
+    # CourseSchedule,
+    # Lecture,
+    # StudentProfile
+)
 
 # Create your views here.
 
@@ -88,3 +95,19 @@ def user_register(request):
         'registered': registered
     }
     return render(request, 'registration.html', context=context)
+
+
+@login_required
+def courses_list(request):
+    context = {
+        'items': list(Course.objects.all())
+    }
+    return render(request, 'courses_list.html', context=context)
+
+
+@login_required
+def course_detail(request, pk):
+    context = {
+        'item': Course.objects.get(pk=pk)
+    }
+    return render(request, 'course_detail.html', context=context)

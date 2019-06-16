@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block body_block %}
+    <h1>ОПИСАНИЕ ТОВАРА</h1>
+    <h2> № {{ item.id }} &nbsp;&nbsp; Название: <em>{{ item.name }}</em> &nbsp;&nbsp; Цена: {{ item.price }} руб.
+    </h2>
+    <h2>Технические характеристики:</h2>
+    <h3>{{ item.description|safe }} </h3>
+    <br>
+    <img src="{%  static item.image %}" alt="Embedded Image" style="height:300px;"/>
+    <hr>
+    <br><br>
+    <a href="/main/items_list/">К списку товаров</a>
+    <br>
+    <a href="/">На главную страницу</a>
+    <br><br><br><br>
+{% endblock %}
