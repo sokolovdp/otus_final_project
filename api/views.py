@@ -18,7 +18,7 @@ from otus_final_project.settings import django_logger
 from rest_framework.authtoken.models import Token
 
 # Generate token for all registered and active users
-# This code should be run only aftre DB will be created
+# This code should be run only when DB is created
 for user in User.objects.all():
     if user.is_active:
         Token.objects.get_or_create(user=user)
