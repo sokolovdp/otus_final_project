@@ -3,10 +3,18 @@
 
 {% block body_block %}
     <h1>Detailed Course Description</h1>
-    <h2>{{ course.id }} &nbsp;&nbsp; Title: <em>{{ course.title }}</em> &nbsp;&nbsp; Price: {{ item.price }} USD
+    <h2>Title: <em>{{ course.title }}</em> &nbsp;&nbsp; Price: {{ item.price }} USD
     </h2>
     <h2>Summary:</h2>
-    <h3>{{ course.description|safe }} </h3>
+    <h4>{{ course.description|safe }} </h4>
+        {%  if lectures %}
+            <h2>Lectures:</h2>
+            {% for lecture in lectures %}
+                <li># {{ lecture.number_in_course }}  <em>{{ lecture.title }}</em>
+            {% endfor %}
+        {% else %}
+             <li><em>No lectures added yet!</em>
+        {% endif %}
     <br><br>
     <a href="/learn/courses_list/">Courses list</a>
     <br>

@@ -107,10 +107,13 @@ def courses_list(request):
 
 @login_required
 def course_detail(request, pk):
-    course = Course.objects.prefetch_related('lectures', 'schedules', 'registrations').get(pk=pk)
-    lectures = course.lectures
-    registrations = course.registrations
-    schedules = course.schedules
+    course = Course.objects\
+        .prefetch_related('lectures', 'schedules', 'registrations')\
+        .order_by('lectures__number_in_course')\
+        .get(pk=pk)
+    lectures = list(course.lectures.all())
+    registrations = list(course.registrations.all())
+    schedules = list(course.schedules.all())
     context = {
         'course': course,
         'lectures': lectures,
