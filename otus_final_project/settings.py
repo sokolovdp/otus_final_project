@@ -162,7 +162,7 @@ STATICFILES_DIRS = [STATIC_DIR, 'static/images', ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = MEDIA_DIR
 
-LOGIN_URL = '/main_app/user_login'
+LOGIN_URL = '/main_page/user_login'
 
 INTERNAL_IPS = ['127.0.0.1', ]  # required for Debug Toolbar
 

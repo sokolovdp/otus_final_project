@@ -11,7 +11,7 @@
         <div class="alert alert-warning text-center" role="alert">
             Login page
         </div>
-        <form class="form-inline justify-content-center" action="{% url 'main_app:user_login' %}" method="POST">
+        <form class="form-inline justify-content-center" action="{% url 'main_page:user_login' %}" method="POST">
             {% csrf_token %}
             <div class="form-group mb-2">
                 <label for="username">Username:&nbsp</label>
