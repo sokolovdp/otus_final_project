@@ -4,9 +4,9 @@
 
 {% block body_block %}
 
-    {% if registered %}
+    {% if student_registered %}
         <div class="alert alert-success text-center" role="alert">
-            You are registered for this course
+            You are registered for this course!
         </div>
     {% elif errors %}
         <div class="alert alert-danger text-center" role="alert">
@@ -20,13 +20,13 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-6">
-                    {{ register_form.course.title|as_crispy_field }}
+                    {{ course_registration_form.course|as_crispy_field }}
                 </div>
                 <div class="col-6">
-                    {{ register_form.student.user.username|as_crispy_field }}
+                    {{ course_registration_form.student|as_crispy_field }}
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Register</button>
         </form>
     {% endif %}
 
