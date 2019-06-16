@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -117,7 +119,7 @@ def course_detail(request, pk):
     context = {
         'course': course,
         'lectures': lectures,
-        'registrations': len(registrations) if registrations else 0,
-        'schedules': schedules,
+        'registrations': len(registrations) if registrations else 111,
+        'scheduled': schedules[0].start_date if schedules else date.today(),
     }
     return render(request, 'course_detail.html', context=context)

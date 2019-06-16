@@ -3,7 +3,7 @@
 
 {% block body_block %}
     <h1>Detailed Course Description</h1>
-    <h2>Title: <em>{{ course.title }}</em> &nbsp;&nbsp; Price: {{ item.price }} USD
+    <h2>Title: <em>{{ course.title }}</em> &nbsp;&nbsp; Price: {{ course.price }} USD
     </h2>
     <h2>Summary:</h2>
     <h4>{{ course.description|safe }} </h4>
@@ -15,6 +15,18 @@
         {% else %}
              <li><em>No lectures added yet!</em>
         {% endif %}
+        {%  if registrations %}
+            <h2>Registered: {{ registrations }} students</h2>
+        {% else %}
+             <li><em>No lectures added yet!</em>
+        {% endif %}
+        {%  if scheduled %}
+            <h2>Course will start: {{ scheduled }}</h2>
+        {% else %}
+             <li><em>Course is not scheduled yet!</em>
+        {% endif %}
+
+
     <br><br>
     <a href="/learn/courses_list/">Courses list</a>
     <br>
