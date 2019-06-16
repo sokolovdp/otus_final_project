@@ -14,8 +14,6 @@ from main_page.models import (
     # Lecture,
 )
 
-# Create your views here.
-
 
 def index_view(request):
     context = {'active': "home"}
@@ -109,9 +107,9 @@ def courses_list(request):
 def course_detail(request, pk):
     user = request.user
     student = request.user.studentprofile if hasattr(user, 'studentprofile') else None
-    course = Course.objects\
-        .prefetch_related('lectures', 'schedules', 'registrations')\
-        .order_by('lectures__number_in_course')\
+    course = Course.objects \
+        .prefetch_related('lectures', 'schedules', 'registrations') \
+        .order_by('lectures__number_in_course') \
         .get(pk=pk)
     lectures = list(course.lectures.all())
     registrations = list(course.registrations.all())
@@ -146,15 +144,16 @@ def course_register(request, course_id, student_id):
     else:
         course_registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id)
         student_registered = True if course_registration else False
-        course_registration_form = CourseRegistrationForm()
+        course_registration_form = CourseRegistrationForm(
+            initial={
+                'student': StudentProfile.objects.filter(pk=student_id).first(),
+                'course': Course.objects.filter(pk=course_id).first()
+            }
+        )
 
     context = {
-        'active': 'register',
-        'course': Course.objects.filter(pk=course_id).first(),
-        'student': StudentProfile.objects.filter(pk=student_id).first(),
         'errors': errors_string,
         'course_registration_form': course_registration_form,
         'student_registered': student_registered
     }
     return render(request, 'course_registration.html', context=context)
-
