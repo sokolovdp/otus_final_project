@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class LearnToFlyConfig(AppConfig):
+class MainPageConfig(AppConfig):
     name = 'main_page'

@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
     'rest_framework.authtoken',
 
-    'main_page.apps.LearnToFlyConfig',
+    'main_page.apps.MainPageConfig',
     'debug_toolbar',
     'rest_framework',
     'crispy_forms',
