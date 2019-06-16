@@ -7,7 +7,7 @@
     <ul class=items>
         {%  if courses %}
             {% for course in courses %}
-                <li><h2><a href="/main/item/{{ course.id }}">Title: <em>{{ course.title }}</em> &nbsp; &nbsp; Price:
+                <li><h2><a href="/learn/course_detail/{{ course.id }}">Title: <em>{{ course.title }}</em> &nbsp; &nbsp; Price:
                     <em>{{ course.price }}</em>
                     USD</a></h2>
             {% endfor %}
