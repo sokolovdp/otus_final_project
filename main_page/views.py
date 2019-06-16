@@ -1,16 +1,14 @@
-from datetime import date
-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from .forms import UserForm, StudentProfileForm
+from main_page.forms import UserForm, StudentProfileForm, CourseRegistrationForm
 from otus_final_project.settings import django_logger
 from main_page.models import (
     Course,
-    # CourseRegistration,
+    CourseRegistration,
     # CourseSchedule,
     # Lecture,
     # StudentProfile
@@ -109,6 +107,8 @@ def courses_list(request):
 
 @login_required
 def course_detail(request, pk):
+    user = request.user
+    student = request.user.studentprofile if hasattr(user, 'studentprofile') else None
     course = Course.objects\
         .prefetch_related('lectures', 'schedules', 'registrations')\
         .order_by('lectures__number_in_course')\
@@ -117,9 +117,42 @@ def course_detail(request, pk):
     registrations = list(course.registrations.all())
     schedules = list(course.schedules.all())
     context = {
+        'student': student,
         'course': course,
         'lectures': lectures,
         'registrations': len(registrations) if registrations else 111,
         'scheduled': schedules[0].start_date if schedules else None,
     }
     return render(request, 'course_detail.html', context=context)
+
+
+@login_required
+def course_register(request, course_id, student_id):
+    registered = False
+    errors_string = None
+
+    if request.method == "POST":
+        register_form = CourseRegistrationForm(data=request.POST)
+
+        if register_form.is_valid():
+            register_form.save()
+            registered = True
+            django_logger.info('successful course registration!')
+        else:
+            all_errors = []
+            for err_list in register_form.errors.values():
+                all_errors.append(' '.join(err_list))
+            errors_string = ' '.join(all_errors)
+    else:
+        course_registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id)
+        registered = True if course_registration else False
+        register_form = CourseRegistrationForm()
+
+    context = {
+        'active': 'register',
+        'errors': errors_string,
+        'register_form': register_form,
+        'registered': registered
+    }
+    return render(request, 'course_registration.html', context=context)
+

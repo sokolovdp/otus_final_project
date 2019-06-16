@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import StudentProfile
+from main_page.models import StudentProfile, CourseRegistration
 
 
 class UserForm(forms.ModelForm):
@@ -16,3 +16,9 @@ class StudentProfileForm(forms.ModelForm):
     class Meta:
         model = StudentProfile
         fields = ('profile_pic', 'category')
+
+
+class CourseRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = CourseRegistration
+        fields = ('course', 'student')
