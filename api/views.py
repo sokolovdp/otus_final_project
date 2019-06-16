@@ -2,6 +2,7 @@ from django.db import transaction, IntegrityError, DatabaseError
 from django.contrib.auth.models import User
 
 from rest_framework.viewsets import ViewSet
+from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication  # , SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
@@ -11,8 +12,8 @@ from main_page.forms import UserForm, StudentProfileForm
 from main_page.models import (
     StudentProfile,
     Course,
+    CourseRegistration,
     # Lecture,
-    # CourseRegistration,
     # CourseSchedule,
 )
 
@@ -21,6 +22,7 @@ from api.serializers import (
     RegisterUserSerializer,
     UserUpdateSerializer,
     CourseSerializer,
+    CourseRegistrationSerializer,
 )
 
 from otus_final_project.settings import django_logger
@@ -111,7 +113,7 @@ class UserProfileViewSet(ViewSet):
 
 
 class CourseViewSet(ViewSet):
-    # authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,)
 
     def get_permissions(self):
         """
@@ -146,3 +148,19 @@ class CourseViewSet(ViewSet):
         course = self.queryset.filter(id=pk).first()
         return Response(self.course_serializer(course).data)
 
+
+class StudentCourseRegistrationView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = CourseRegistrationSerializer
+
+    def post(self, request, course_id, student_id):
+        registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id).first()
+        if not registration:
+            try:
+                student = StudentProfile.objects.get(pk=student_id)
+                course = Course.objects.get(pk=course_id)
+                registration = CourseRegistration(student=student, course=course)
+                registration.save()
+            except (IntegrityError, DatabaseError, Exception) as e:
+                return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(self.serializer_class(registration).data)
