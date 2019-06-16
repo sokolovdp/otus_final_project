@@ -107,7 +107,14 @@ def courses_list(request):
 
 @login_required
 def course_detail(request, pk):
+    course = Course.objects.prefetch_related('lectures', 'schedules', 'registrations').get(pk=pk)
+    lectures = course.lectures
+    registrations = course.registrations
+    schedules = course.schedules
     context = {
-        'course': Course.objects.get(pk=pk)
+        'course': course,
+        'lectures': lectures,
+        'registrations': len(registrations) if registrations else 0,
+        'schedules': schedules,
     }
     return render(request, 'course_detail.html', context=context)

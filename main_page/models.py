@@ -23,18 +23,18 @@ class Course(models.Model):
 
 class Lecture(models.Model):
     id = models.IntegerField(primary_key=True)
-    course = models.ForeignKey(Course, related_name='lecture', on_delete=models.SET_NULL, null=True)
+    course = models.ForeignKey(Course, related_name='lectures', on_delete=models.SET_NULL, null=True)
     number_in_course = models.IntegerField()
 
 
 class CourseRegistration(models.Model):
     id = models.IntegerField(primary_key=True)
-    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    student = models.ForeignKey(StudentProfile, related_name='students', on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='registrations', on_delete=models.CASCADE)
 
 
 class CourseSchedule(models.Model):
     id = models.IntegerField(primary_key=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name='schedules', on_delete=models.CASCADE)
     start_date = models.DateField()
 
