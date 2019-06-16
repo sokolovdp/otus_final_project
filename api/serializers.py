@@ -1,18 +1,30 @@
 from rest_framework import serializers
 
 from django.contrib.auth.models import User
-from main_page.models import StudentProfile
+from main_page.models import (
+    StudentProfile,
+    Course,
+    Lecture,
+    CourseSchedule,
+    CourseRegistration,
+)
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
         fields = '__all__'
 
 
+class CourseRegistrationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseRegistration
+        fields = '__all__'
+
+
 class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    courses_registrations = CourseRegistrationSerializer(many=True)
 
     class Meta:
         model = StudentProfile
@@ -36,3 +48,22 @@ class UserUpdateSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=80, required=False)
 
 
+class LectureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lecture
+        fields = '__all__'
+
+
+class CourseScheduleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CourseSchedule
+        fields = '__all__'
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    lectures = LectureSerializer(many=True)
+    schedules = CourseScheduleSerializer(many=True)
+
+    class Meta:
+        model = Course
+        fields = '__all__'
