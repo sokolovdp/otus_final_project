@@ -120,6 +120,6 @@ def course_detail(request, pk):
         'course': course,
         'lectures': lectures,
         'registrations': len(registrations) if registrations else 111,
-        'scheduled': schedules[0].start_date if schedules else date.today(),
+        'scheduled': schedules[0].start_date if schedules else None,
     }
     return render(request, 'course_detail.html', context=context)
