@@ -2,17 +2,14 @@
 {% load staticfiles %}
 
 {% block body_block %}
-    <h1>ОПИСАНИЕ ТОВАРА</h1>
-    <h2> № {{ item.id }} &nbsp;&nbsp; Название: <em>{{ item.name }}</em> &nbsp;&nbsp; Цена: {{ item.price }} руб.
+    <h1>Detailed Course Description</h1>
+    <h2>{{ course.id }} &nbsp;&nbsp; Title: <em>{{ course.title }}</em> &nbsp;&nbsp; Price: {{ item.price }} USD
     </h2>
-    <h2>Технические характеристики:</h2>
-    <h3>{{ item.description|safe }} </h3>
-    <br>
-    <img src="{%  static item.image %}" alt="Embedded Image" style="height:300px;"/>
-    <hr>
+    <h2>Summary:</h2>
+    <h3>{{ course.description|safe }} </h3>
     <br><br>
-    <a href="/main/items_list/">К списку товаров</a>
+    <a href="/learn/courses_list/">Courses List</a>
     <br>
-    <a href="/">На главную страницу</a>
+    <a href="/">Return to main page</a>
     <br><br><br><br>
 {% endblock %}

@@ -3,20 +3,19 @@
 {% load crispy_forms_tags %}
 
 {% block body_block %}
-    <h1>СПИСОК ТОВАРОВ</h1>
+    <h1>AVAILABLE COURSES</h1>
     <ul class=items>
-        {%  if items %}
-            {% for item in items %}
-                <li><h2><a href="/main/item/{{ item.id }}">Название: <em>{{ item.name }}</em> &nbsp; &nbsp; Цена:
-                    <em>{{ item.price }}</em>
-                    руб.</a></h2>
-                    <img src="{% static item.image %}" alt="Embedded Image" style="height:50px;"/>
+        {%  if courses %}
+            {% for course in courses %}
+                <li><h2><a href="/main/item/{{ course.id }}">Title: <em>{{ course.title }}</em> &nbsp; &nbsp; Price:
+                    <em>{{ course.price }}</em>
+                    USD</a></h2>
             {% endfor %}
         {% else %}
              <li><em>Unbelievable. No entries here so far</em>
         {% endif %}
     </ul>
     <br><br>
-    <a href="/">На главную страницу</a>
+    <a href="/">Return to main page</a>
     <br><br><br><br><br>
 {% endblock %}
