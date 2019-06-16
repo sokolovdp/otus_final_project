@@ -16,6 +16,24 @@ Django server will start at localhost:8000/
 ## Backend APIs to support CRUD actions for User and Course models were created with DRF ViewSet. For authorization is used Token Authorization scheme
 
 ```
+POST: /api/v1/get_auth_token/
+{
+    "password": "*******",
+    "username": "admin"
+}
+RESPONSE:
+{
+    "token": "e42325582f6f9fd3782034a2e746c2519b06ed6a"
+}
+HEADERS:
+Content-Type:application/json
+Authorization:Token ec710681622a1d8042d606077612cdce7b84411f
+
+```
+## Sample of User and Course detailed views results:
+
+USER:
+```
 {
     "id": 2,
     "user": {
@@ -50,7 +68,7 @@ Django server will start at localhost:8000/
 }
 
 ```
-
+COURSE:
 ```
 {
     "id": 2,
