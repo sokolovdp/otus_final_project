@@ -142,7 +142,7 @@ def course_register(request, course_id, student_id):
                 all_errors.append(' '.join(err_list))
             errors_string = ' '.join(all_errors)
     else:
-        course_registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id)
+        course_registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id).first()
         student_registered = True if course_registration else False
         course_registration_form = CourseRegistrationForm(
             initial={
