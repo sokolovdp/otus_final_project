@@ -13,7 +13,7 @@ class StudentProfile(models.Model):
 
 
 class StudentProfileAdmin(admin.ModelAdmin):
-    fields = ('user', 'profile_pic', 'category')
+    list_display = ('user', 'profile_pic', 'category')
 
 
 class Course(models.Model):
@@ -25,7 +25,7 @@ class Course(models.Model):
 
 
 class CourseAdmin(admin.ModelAdmin):
-    fields = ('id', 'title', 'number_of_lectures', 'description', 'price')
+    list_display = ('id', 'title', 'number_of_lectures', 'description', 'price')
 
 
 class Lecture(models.Model):
@@ -36,7 +36,7 @@ class Lecture(models.Model):
 
 
 class LectureAdmin(admin.ModelAdmin):
-    fields = ('id', 'title', 'course', 'number_in_course')
+    list_display = ('id', 'title', 'course', 'number_in_course')
 
 
 class CourseRegistration(models.Model):
@@ -46,7 +46,7 @@ class CourseRegistration(models.Model):
 
 
 class CourseRegistrationAdmin(admin.ModelAdmin):
-    fields = ('id', 'student', 'course')
+    list_display = ('id', 'student', 'course')
 
 
 class CourseSchedule(models.Model):
@@ -56,6 +56,6 @@ class CourseSchedule(models.Model):
 
 
 class CourseScheduleAdmin(admin.ModelAdmin):
-    fields = ('id', 'course', 'start_date')
+    list_display = ('id', 'course', 'start_date')
 
 
