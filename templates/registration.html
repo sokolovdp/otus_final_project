@@ -22,51 +22,52 @@
         {#            <button type="submit" class="btn btn-primary" value="OK">Sign Up</button>#}
         {#        </form>#}
 
-        <div class="container">
-            <div class="panel-body">
-                <form id="signupform" class="form-horizontal" role="form" method="POST"
-                      enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="username" class="col-md-3 control-label">User Name</label>
-                        <div class="col-md-9">
-                            <input id="id_username" type="text" class="form-control" name="username"
-                                   placeholder="User Name" value="{{ username }}">
+        <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <form id="signupform" class="form-horizontal" role="form" method="POST"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="username" class="col-md-3 control-label">Username</label>
+                            <div class="col-md-9">
+                                <input id="id_username" type="text" class="form-control" name="username"
+                                       placeholder="User Name" value="{{ username }}">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="password" class="col-md-3 control-label">Password</label>
-                        <div class="col-md-9">
-                            <input type="password" class="form-control" name="password" value="{{ password }}"
-                                   placeholder="Password">
+                        <div class="form-group">
+                            <label for="password" class="col-md-3 control-label">Password</label>
+                            <div class="col-md-9">
+                                <input type="password" class="form-control" name="password" value="{{ password }}"
+                                       placeholder="Password">
 
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="email" class="col-md-3 control-label">Email</label>
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="email" value="{{ email }}"
-                                   placeholder="Email Address">
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="email" value="{{ email }}"
+                                       placeholder="Email Address">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <!-- Button -->
-                        <div class="col-md-offset-3 col-md-9">
-                            <button id="btn-signup" type="submit" class="btn btn-info"><i
-                                    class="icon-hand-right"></i>
-                                &nbsp Sign Up
-                            </button>
-                            <span style="margin-left:8px;"></span>
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btn-signup" type="submit" class="btn btn-info"><i
+                                        class="icon-hand-right"></i>
+                                    &nbsp Sign Up
+                                </button>
+                                <span style="margin-left:8px;"></span>
+                            </div>
                         </div>
-                    </div>
 
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-
     {% endif %}
 
 {% endblock %}
