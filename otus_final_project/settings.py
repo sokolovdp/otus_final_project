@@ -48,12 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'debug_toolbar',
+    'rest_framework',
     'rest_framework.authtoken',
 
     'main_page.apps.MainPageConfig',
-    'debug_toolbar',
-    'rest_framework',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -184,9 +183,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     )
 }
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
 
 LOGGING = {
     'version': 1,

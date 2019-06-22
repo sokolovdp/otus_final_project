@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 
 {% block body_block %}
 
@@ -20,10 +19,10 @@
             {% csrf_token %}
             <div class="row">
                 <div class="col-6">
-                    {{ course_registration_form.course|as_crispy_field }}
+                    {{ course_registration_form.course }}
                 </div>
                 <div class="col-6">
-                    {{ course_registration_form.student|as_crispy_field }}
+                    {{ course_registration_form.student }}
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Register</button>

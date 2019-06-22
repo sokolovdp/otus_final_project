@@ -63,7 +63,6 @@ USER:
             "course": 1
         }
     ],
-    "profile_pic": null,
     "category": "student"
 }
 

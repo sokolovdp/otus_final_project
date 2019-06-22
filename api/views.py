@@ -63,7 +63,7 @@ class UserProfileViewSet(ViewSet):
         try:
             with transaction.atomic():
                 user_form = UserForm(data=serializer.validated_data)
-                profile_form = StudentProfileForm(data=dict(profile_pic=None, category='student'))
+                profile_form = StudentProfileForm(data=dict(category='student'))
                 new_user = user_form.save()
                 new_user.set_password(new_user.password)  # hash password
                 new_user.save()

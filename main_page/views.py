@@ -66,10 +66,6 @@ def user_register(request):
 
             profile = profile_form.save(commit=False)
             profile.user = user  # One to One relation
-
-            if 'profile_pic' in request.FILES:
-                profile.profile_pic = request.FILES['profile_pic']
-
             profile.save()
             registered = True
             django_logger.info('successful user registration!')
