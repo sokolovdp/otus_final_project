@@ -57,13 +57,13 @@ def user_register(request):
 
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
-        profile_form = StudentProfileForm(data=request.POST)
 
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)  # hash password
             user.save()
 
+            profile_form = StudentProfileForm(data={'category': 'student'})
             profile = profile_form.save(commit=False)
             profile.user = user  # One to One relation
             profile.save()
@@ -73,19 +73,15 @@ def user_register(request):
             all_errors = []
             for err_list in user_form.errors.values():
                 all_errors.append(' '.join(err_list))
-            for err_list in profile_form.errors.values():
-                all_errors += ' '.join(err_list)
             errors_string = ' '.join(all_errors)
     else:
         registered = True if request.user.username else False
         user_form = UserForm()
-        profile_form = StudentProfileForm()
 
     context = {
         'active': 'register',
         'errors': errors_string,
         'user_form': user_form,
-        'profile_form': profile_form,
         'registered': registered
     }
     return render(request, 'registration.html', context=context)
