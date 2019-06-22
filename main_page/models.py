@@ -14,6 +14,8 @@ class StudentProfile(models.Model):
 
 class StudentProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'profile_pic', 'category')
+    list_filter = ('category', )
+    fields = ['category', ('user', 'profile_pic')]
 
 
 class Course(models.Model):
@@ -24,10 +26,6 @@ class Course(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
 
 
-class CourseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'number_of_lectures', 'description', 'price')
-
-
 class Lecture(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
@@ -35,8 +33,21 @@ class Lecture(models.Model):
     number_in_course = models.IntegerField()
 
 
+class LectureInline(admin.TabularInline):
+    model = Lecture
+
+
+class CourseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title', 'number_of_lectures', 'description', 'price')
+    list_filter = ('id', 'number_of_lectures', 'price')
+    fields = [('id', 'title', 'number_of_lectures', 'price'), 'description']
+    inlines = [LectureInline, ]
+
+
 class LectureAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'course', 'number_in_course')
+    list_filter = ('id', 'course',)
+    fields = [('id', 'number_in_course', 'title'), 'course']
 
 
 class CourseRegistration(models.Model):
@@ -47,6 +58,8 @@ class CourseRegistration(models.Model):
 
 class CourseRegistrationAdmin(admin.ModelAdmin):
     list_display = ('id', 'student', 'course')
+    list_filter = ('id', 'course', 'student')
+    fields = ['id', 'student', 'course']
 
 
 class CourseSchedule(models.Model):
@@ -57,5 +70,5 @@ class CourseSchedule(models.Model):
 
 class CourseScheduleAdmin(admin.ModelAdmin):
     list_display = ('id', 'course', 'start_date')
-
-
+    list_filter = ('id', 'course', 'start_date')
+    fields = ['id', 'course', 'start_date']
