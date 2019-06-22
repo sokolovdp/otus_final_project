@@ -2,19 +2,27 @@
 {% load staticfiles %}
 
 {% block body_block %}
-    <h1>AVAILABLE COURSES</h1>
-    <ul class=items>
-        {%  if courses %}
+
+    <div class="alert alert-dark text-center" role="alert">
+        Courses List
+    </div>
+
+    <ul class="list-group">
+        {% if courses %}
             {% for course in courses %}
-                <li><h2><a href="/learn/course_detail/{{ course.id }}">Title: <em>{{ course.title }}</em> &nbsp; &nbsp; Price:
-                    <em>{{ course.price }}</em>
-                    USD</a></h2>
+                <li class="list-group-item list-group-item-action">
+                    <a href="/learn/course_detail/{{ course.id }}">
+                        Course ID: <em>{{ course.id }}&nbsp&nbsp</em>
+                        Title: <em>{{ course.title }}&nbsp&nbsp</em>
+                        Price: <em>{{ course.price }}$</em>
+                    </a>
+                </li>
             {% endfor %}
         {% else %}
-             <li><em>Unbelievable. No entries here so far</em>
+            <li><em>Unbelievable. No entries here so far</em>
         {% endif %}
     </ul>
-    <br><br>
-    <a href="/">Return to main page</a>
-    <br><br><br><br><br>
+    {#    <br><br>#}
+    {#    <a href="/">Return to main page</a>#}
+    {#    <br><br><br><br><br>#}
 {% endblock %}
