@@ -12,7 +12,7 @@
         <h3>Title: <em>{{ course.title }}</em></h3>
         <h3>Price: {{ course.price }}$ </h3>
         <h2>Summary:</h2>
-        <h4>{{ course.description|safe }} </h4>
+        <h5>{{ course.description|safe }} </h5>
 
         {% if lectures %}
             <h2>Lectures:</h2>
@@ -31,7 +31,7 @@
             <h2>Course will start: {{ scheduled }}</h2>
             {% if student %}
                 <a class="nav-item nav-link"
-                   href="{% url 'main_page:course_register' course.id student.id %}">Register to course
+                   href="{% url 'main_page:course_register' course.id student.id %}"><h2>Register to this course</h2>
                 </a>
             {% endif %}
         {% else %}

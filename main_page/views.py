@@ -98,7 +98,7 @@ def courses_list(request):
 @login_required
 def course_detail(request, pk):
     user = request.user
-    student = request.user.studentprofile if hasattr(user, 'studentprofile') else None
+    student = user.student_profile if hasattr(user, 'student_profile') else None
     course = Course.objects \
         .prefetch_related('lectures', 'schedules', 'registrations') \
         .order_by('lectures__number_in_course') \
