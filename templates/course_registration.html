@@ -15,18 +15,42 @@
         <div class="alert alert-dark text-center" role="alert">
             Course Registration page
         </div>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-6">
-                    {{ course_registration_form.course }}
-                </div>
-                <div class="col-6">
-                    {{ course_registration_form.student }}
+        <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    <form id="signupform" class="form-horizontal" role="form" method="POST"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="course" class="col-md-3 control-label">Course</label>
+                            <div class="col-md-9">
+                                {{ course_registration_form.course }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="student" class="col-md-3 control-label">Student</label>
+                            <div class="col-md-9">
+                                {{ course_registration_form.student }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <!-- Button -->
+                            <div class="col-md-offset-3 col-md-9">
+                                <button id="btn-signup" type="submit" class="btn btn-info"><i
+                                        class="icon-hand-right"></i>
+                                    &nbsp Sign Up
+                                </button>
+                                <span style="margin-left:8px;"></span>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
+        </div>
     {% endif %}
 
 {% endblock %}
