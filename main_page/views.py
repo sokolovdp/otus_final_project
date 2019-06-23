@@ -6,14 +6,11 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from main_page.forms import UserForm, StudentProfileForm, CourseRegistrationForm
+from main_page.forms import UserForm, StudentProfileForm
 from otus_final_project.settings import django_logger
 from main_page.models import (
     Course,
     CourseRegistration,
-    StudentProfile,
-    # CourseSchedule,
-    # Lecture,
 )
 
 
