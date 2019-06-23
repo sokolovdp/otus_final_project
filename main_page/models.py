@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import User
 
 
@@ -9,12 +8,6 @@ class StudentProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-class StudentProfileAdmin(admin.ModelAdmin):
-    list_display = ('user',  'category')
-    list_filter = ('category', )
-    fields = ['category', 'user', ]
 
 
 class Course(models.Model):

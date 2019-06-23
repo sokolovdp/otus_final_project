@@ -2,12 +2,17 @@ from django.contrib import admin
 
 from main_page.models import (
     StudentProfile,
-    StudentProfileAdmin,
     Course,
     Lecture,
     CourseRegistration,
     CourseSchedule,
 )
+
+
+class StudentProfileAdmin(admin.ModelAdmin):
+    list_display = ('user',  'category')
+    list_filter = ('category', )
+    fields = ['category', 'user', ]
 
 
 class LectureInline(admin.TabularInline):
