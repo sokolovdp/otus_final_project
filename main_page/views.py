@@ -91,8 +91,14 @@ def user_register(request):
 
 @login_required
 def courses_list(request):
+    user = request.user
+    student = user.student_profile if hasattr(user, 'student_profile') else None
+    courses = list(Course.objects.prefetch_related('registrations').all())
+    student_registrations = {course.id for course in courses if course.student_registered(student.id)}
     context = {
-        'courses': list(Course.objects.all())
+        'courses': courses,
+        'student_id': student.id if student else None,
+        'student_registrations': student_registrations,
     }
     return render(request, 'courses_list.html', context=context)
 

@@ -17,6 +17,9 @@
                             Title: <em>{{ course.title }}&nbsp&nbsp</em>
                             Price: <em>{{ course.price }}$</em>
                         </a>
+                        {% if student_id and course.id in student_registrations %}
+                            &nbsp&nbsp&nbsp&nbsp(you are registered)
+                        {% endif %}
                     </li>
                 {% endfor %}
             {% else %}
