@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -106,16 +108,25 @@ def course_detail(request, pk):
     lectures = list(course.lectures.all())
     registrations = list(course.registrations.all())
     schedules = list(course.schedules.all())
-    student_registered = False
+
+    for schedule in schedules:  # find 1st date in course schedule in future
+        if date.today() <= schedule.start_date:
+            scheduled = schedule.start_date
+            break
+    else:
+        scheduled = None
+
+    student_registered = False  # check if student registered for this course
     for registration in registrations:
         if registration.student.pk == student.pk:
             student_registered = True
+
     context = {
         'student': student,
         'course': course,
         'lectures': lectures,
         'registrations': len(registrations) if registrations else 0,
-        'scheduled': schedules[0].start_date if schedules else None,
+        'scheduled': scheduled,
         'student_registered': student_registered,
     }
     return render(request, 'course_detail.html', context=context)
