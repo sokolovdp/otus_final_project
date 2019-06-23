@@ -106,12 +106,17 @@ def course_detail(request, pk):
     lectures = list(course.lectures.all())
     registrations = list(course.registrations.all())
     schedules = list(course.schedules.all())
+    student_registered = False
+    for registration in registrations:
+        if registration.student.pk == student.pk:
+            student_registered = True
     context = {
         'student': student,
         'course': course,
         'lectures': lectures,
         'registrations': len(registrations) if registrations else 0,
         'scheduled': schedules[0].start_date if schedules else None,
+        'student_registered': student_registered,
     }
     return render(request, 'course_detail.html', context=context)
 
