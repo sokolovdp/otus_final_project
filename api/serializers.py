@@ -13,24 +13,22 @@ from main_page.models import (
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        exclude = ('password',)
 
 
-class CourseRegistrationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CourseRegistration
-        fields = '__all__'
-
-
-class StudentProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-    courses_registrations = CourseRegistrationSerializer(many=True)
+class StudentUsernameSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
 
     class Meta:
         model = StudentProfile
-        fields = '__all__'
+        fields = ('id', 'username',)
+
+    @staticmethod
+    def get_username(student_profile):
+        return student_profile.user.username
 
 
+# noinspection PyAbstractClass
 class RegisterUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=40)
     password = serializers.CharField(max_length=20)
@@ -39,6 +37,7 @@ class RegisterUserSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=80)
 
 
+# noinspection PyAbstractClass
 class UserUpdateSerializer(serializers.Serializer):
     pk = serializers.PrimaryKeyRelatedField(queryset=StudentProfile.objects)
     username = serializers.CharField(max_length=40, required=False)
@@ -51,20 +50,55 @@ class UserUpdateSerializer(serializers.Serializer):
 class LectureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
-        fields = '__all__'
+        exclude = ('course',)
 
 
 class CourseScheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseSchedule
-        fields = '__all__'
+        exclude = ('course',)
+
+
+class ShortCourseRegistrationSerializer(serializers.ModelSerializer):
+    student = StudentUsernameSerializer()
+
+    class Meta:
+        model = CourseRegistration
+        fields = ('id', 'student',)
 
 
 class CourseSerializer(serializers.ModelSerializer):
     lectures = LectureSerializer(many=True)
     schedules = CourseScheduleSerializer(many=True)
-    registrations = CourseRegistrationSerializer(many=True)
+    registrations = ShortCourseRegistrationSerializer(many=True)
 
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = (
+            'id',
+            'title',
+            'price',
+            'number_of_lectures',
+            'description',
+            'lectures',
+            'schedules',
+            'registrations',
+        )
+
+
+class CourseRegistrationSerializer(serializers.ModelSerializer):
+    student = StudentUsernameSerializer()
+    course = CourseSerializer()
+
+    class Meta:
+        model = CourseRegistration
+        fields = ('id', 'student', 'course',)
+
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    courses_registrations = CourseRegistrationSerializer(many=True)
+
+    class Meta:
+        model = StudentProfile
+        fields = ('user', 'courses_registrations',)
