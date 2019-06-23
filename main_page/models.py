@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 
 
 class StudentProfile(models.Model):
-    id = models.IntegerField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
     category = models.CharField(max_length=40, null=True)
 
@@ -12,7 +11,6 @@ class StudentProfile(models.Model):
 
 
 class Course(models.Model):
-    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
     number_of_lectures = models.IntegerField()
     description = models.TextField()
@@ -23,20 +21,20 @@ class Course(models.Model):
 
 
 class Lecture(models.Model):
-    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=200)
     course = models.ForeignKey(Course, related_name='lectures', on_delete=models.SET_NULL, null=True)
     number_in_course = models.IntegerField()
 
 
 class CourseRegistration(models.Model):
-    id = models.IntegerField(primary_key=True)
-    student = models.ForeignKey(StudentProfile, related_name='courses_registrations', on_delete=models.CASCADE)
+    student = models.ForeignKey(
+        StudentProfile,
+        related_name='courses_registrations',
+        on_delete=models.CASCADE
+    )
     course = models.ForeignKey(Course, related_name='registrations', on_delete=models.CASCADE)
 
 
 class CourseSchedule(models.Model):
-    id = models.IntegerField(primary_key=True)
     course = models.ForeignKey(Course, related_name='schedules', on_delete=models.CASCADE)
     start_date = models.DateField()
-
