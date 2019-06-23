@@ -7,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication  # , SessionAuthen
 from rest_framework.permissions import IsAuthenticated, IsAdminUser  # AllowAny,
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 from main_page.models import (
     StudentProfile,
@@ -23,14 +24,6 @@ from api.serializers import (
 )
 
 from otus_final_project.settings import django_logger
-
-from rest_framework.authtoken.models import Token
-
-# Generate token for all registered and active users
-# This code should be run only when DB is created
-for user in User.objects.all():
-    if user.is_active:
-        Token.objects.get_or_create(user=user)
 
 
 class UserProfileViewSet(ViewSet):
@@ -64,6 +57,7 @@ class UserProfileViewSet(ViewSet):
                 new_user.save()
                 new_student_profile = StudentProfile(user=new_user, category='student')
                 new_student_profile.save()
+                Token.objects.get_or_create(user=new_user)
         except (IntegrityError, DatabaseError, Exception) as e:
             return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         else:
