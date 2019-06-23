@@ -13,12 +13,12 @@
                 {% for course in courses %}
                     <li class="list-group-item list-group-item-action">
                         <a href="/learn/course_detail/{{ course.id }}">
-                            Course ID: <em>{{ course.id }}&nbsp&nbsp</em>
-                            Title: <em>{{ course.title }}&nbsp&nbsp</em>
-                            Price: <em>{{ course.price }}$</em>
+                            ID: <em>{{ course.id }}&emsp;</em>
+                            Title: <em>{{ course.title }}&emsp;</em>
+                            Price: <em>{{ course.price }}$&emsp;</em>
                         </a>
                         {% if student_id and course.id in student_registrations %}
-                            &nbsp&nbsp&nbsp&nbsp(you are registered)
+                            &emsp;(you are registered)
                         {% endif %}
                     </li>
                 {% endfor %}
