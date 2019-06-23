@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.shortcuts import render
+from django.db import transaction, IntegrityError, DatabaseError
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -55,28 +56,32 @@ def user_login(request):
 def user_register(request):
     registered = False
     errors_string = None
+    all_errors = []
 
     if request.method == "POST":
         user_form = UserForm(data=request.POST)
-
         if user_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)  # hash password
-            user.save()
+            try:
+                with transaction.atomic():
+                    user = user_form.save()
+                    user.set_password(user.password)  # hash password
+                    user.save()
 
-            profile_form = StudentProfileForm(data={'category': 'student'})
-            profile = profile_form.save(commit=False)
-            profile.user = user  # One to One relation
-            profile.save()
+                    profile_form = StudentProfileForm(data={'category': 'student'})
+                    profile = profile_form.save(commit=False)
+                    profile.user = user  # One to One relation
+                    profile.save()
 
-            Token.objects.get_or_create(user=user)
-            registered = True
-            django_logger.info('successful user registration!')
+                    Token.objects.get_or_create(user=user)
+                    registered = True
+                    django_logger.info('successful user registration!')
+            except (IntegrityError, DatabaseError, Exception) as e:
+                all_errors.append(str(e))
+                registered = False
         else:
-            all_errors = []
             for err_list in user_form.errors.values():
                 all_errors.append(' '.join(err_list))
-            errors_string = ' '.join(all_errors)
+        errors_string = ' '.join(all_errors)
     else:
         registered = True if request.user.username else False
         user_form = UserForm()
