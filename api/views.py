@@ -46,10 +46,10 @@ class UserProfileViewSet(ViewSet):
         django_logger.info(f'user profile action request: "{self.action}"')
         if self.action in ('create', 'destroy', 'update'):
             permission_classes = (IsAdminUser,)
-        elif self.action in ('retrieve',):
+        elif self.action in ('retrieve', 'list'):
             permission_classes = (IsAuthenticated,)
         else:
-            permission_classes = (AllowAny,)
+            permission_classes = ()
         return [permission() for permission in permission_classes]
 
     queryset = StudentProfile.objects.prefetch_related('courses_registrations')
@@ -63,8 +63,8 @@ class UserProfileViewSet(ViewSet):
         try:
             with transaction.atomic():
                 user_form = UserForm(data=serializer.validated_data)
-                profile_form = StudentProfileForm(data=dict(category='student'))
-                new_user = user_form.save()
+                profile_form = StudentProfileForm(data={'category': 'student'})
+                new_user = user_form.save(commit=False)
                 new_user.set_password(new_user.password)  # hash password
                 new_user.save()
                 profile = profile_form.save(commit=False)

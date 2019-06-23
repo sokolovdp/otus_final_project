@@ -111,9 +111,9 @@ def course_detail(request, pk):
         .prefetch_related('lectures', 'schedules', 'registrations') \
         .order_by('lectures__number_in_course') \
         .get(pk=pk)
-    lectures = list(course.lectures.all())
-    registrations = list(course.registrations.all())
-    schedules = list(course.schedules.all())
+    lectures = course.lectures.all()
+    registrations = course.registrations.all()
+    schedules = course.schedules.all()
 
     for schedule in schedules:  # find 1st date in course schedule in future
         if date.today() <= schedule.start_date:
