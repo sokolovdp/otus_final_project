@@ -142,74 +142,22 @@ def get_course_registration(course_id=None, student_id=None):
 
 @login_required
 def course_register(request, course_id, student_id):
-    student_registered = False
-    errors_string = None
-    all_errors = []
+    user = request.user
+    student = user.student_profile if hasattr(user, 'student_profile') else None
+    course_registration = get_course_registration(course_id=course_id, student_id=student_id)
+    course = Course.objects.filter(pk=course_id).first()
+    if student_id == student.id and not course_registration and course:
+        CourseRegistration(student=student, course=course).save()
 
-    if request.method == "POST":
-        course_registration_form = CourseRegistrationForm(data=request.POST)
-
-        if course_registration_form.is_valid():
-            user = request.user
-            student = user.student_profile if hasattr(user, 'student_profile') else None
-            if student and student.id == course_registration_form.cleaned_data['student'].id:
-                course_registration_form.save()
-                student_registered = True
-                django_logger.info('successful course registration!')
-            else:
-                all_errors.append('Invalid registration: you are not a student, or trying register somebody else')
-        else:
-            for err_list in course_registration_form.errors.values():
-                all_errors.append(' '.join(err_list))
-        errors_string = ' '.join(all_errors)
-    else:
-        course_registration = get_course_registration(student_id=student_id, course_id=course_id)
-        student_registered = True if course_registration else False
-        course_registration_form = CourseRegistrationForm(
-            initial={
-                'student': StudentProfile.objects.filter(pk=student_id).first(),
-                'course': Course.objects.filter(pk=course_id).first()
-            }
-        )
-
-    context = {
-        'errors': errors_string,
-        'course_registration_form': course_registration_form,
-        'student_registered': student_registered
-    }
-    return render(request, 'course_registration.html', context=context)
+    return HttpResponseRedirect(reverse('main_page:course_detail', args={course_id}))
 
 
 @login_required
 def cancel_course_registration(request, course_id, student_id):
-    student_registered = False
-    errors_string = None
+    user = request.user
+    student = user.student_profile if hasattr(user, 'student_profile') else None
+    course_registration = get_course_registration(course_id=course_id, student_id=student_id)
+    if student_id == student.id and course_registration:
+        course_registration.delete()
 
-    if request.method == "POST":
-        course_registration_form = CourseRegistrationForm(data=request.POST)
-
-        if course_registration_form.is_valid():
-            course_registration_form.save()
-            student_registered = True
-            django_logger.info('successfully cancel course registration!')
-        else:
-            all_errors = []
-            for err_list in course_registration_form.errors.values():
-                all_errors.append(' '.join(err_list))
-            errors_string = ' '.join(all_errors)
-    else:
-        course_registration = CourseRegistration.objects.filter(student_id=student_id, course_id=course_id).first()
-        student_registered = True if course_registration else False
-        course_registration_form = CourseRegistrationForm(
-            initial={
-                'student': StudentProfile.objects.filter(pk=student_id).first(),
-                'course': Course.objects.filter(pk=course_id).first()
-            }
-        )
-
-    context = {
-        'errors': errors_string,
-        'course_registration_form': course_registration_form,
-        'student_registered': student_registered
-    }
-    return render(request, 'course_registration.html', context=context)
+    return HttpResponseRedirect(reverse('main_page:course_detail', args={course_id}))

@@ -31,12 +31,14 @@
             <h2>Course will start: {{ scheduled }}</h2>
             {% if student %}
                 {% if student_registered %}
-                     <a class="nav-item nav-link"
-                       href="{% url 'main_page:course_register' course.id student.id %}"><h2>Cancel registration</h2>
+                    <a class="nav-item nav-link"
+                       href="{% url 'main_page:cancel_course_registration' course.id student.id %}">
+                        <h2>Cancel registration</h2>
                     </a>
                 {% else %}
                     <a class="nav-item nav-link"
-                       href="{% url 'main_page:course_register' course.id student.id %}"><h2>Register to this course</h2>
+                       href="{% url 'main_page:course_register' course.id student.id %}">
+                        <h2>Register to this course</h2>
                     </a>
                 {% endif %}
             {% endif %}
