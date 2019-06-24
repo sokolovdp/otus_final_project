@@ -18,7 +18,7 @@ from main_page.models import (
 
 
 def index_view(request):
-    context = {'active': "home"}
+    context = {'active': 'home'}
     return render(request, 'index.html', context=context)
 
 
@@ -31,7 +31,7 @@ def user_logout(request):
 
 def user_login(request):
     errors_string = None
-    if request.method == "POST":
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
 
@@ -49,7 +49,7 @@ def user_login(request):
             django_logger.info(f'invalid login: "{username}" password: "{password}"')
             errors_string = 'INVALID USERNAME OR PASSWORD!'
 
-    context = {'active': "login", 'errors': errors_string}
+    context = {'active': 'login', 'errors': errors_string}
     return render(request, 'login.html', context=context)
 
 
@@ -58,7 +58,7 @@ def user_register(request):
     errors_string = None
     all_errors = []
 
-    if request.method == "POST":
+    if request.method == 'POST':
         user_form = UserForm(data=request.POST)
         if user_form.is_valid():
             try:
