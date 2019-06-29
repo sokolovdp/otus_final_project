@@ -10,5 +10,6 @@ var contentArray = [
     "In vino veritas!",
     "Natura nihil frustra facit!",
     "Si vis pacem, para bellum!",
-    "Philosophum non facit barba!"
+    "Philosophum non facit barba!",
+    "In dubio abstine"
 ];
