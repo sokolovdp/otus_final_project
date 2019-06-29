@@ -7,6 +7,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
+    <script id="contentJson" type="application/json">
+            [
+              "Acta non verba!",
+              "Dum spiro, spero!",
+              "Medice, cura te ipsum!",
+              "Periculum in mora!",
+              "Qui dormit non peccat!",
+              "Quod licet Iovi, non licet bovi!",
+              "Memento mori!",
+              "Post coitum omne animal triste est!",
+              "In vino veritas!",
+              "Natura nihil frustra facit!",
+              "Si vis pacem, para bellum!",
+              "Philosophum non facit barba!"
+            ]
+        </script>
 </head>
 <body>
 {% load staticfiles %}
@@ -26,7 +42,7 @@
                 <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
             {% endif %}
             {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="#">You logged as: {{ user.username }}</a>
+                <a class="nav-item nav-link" href="#">Logged: {{ user.username }}</a>
                 <a class="nav-item nav-link" href="{% url 'main_page:user_logout' %}">Logout</a>
                 <a class="nav-item nav-link" href="{% url 'main_page:courses_list' %}">Courses List</a>
             {% else %}
@@ -42,9 +58,9 @@
                 {% endif %}
             {% endif %}
         </div>
-
+            <a class="navbar-text mx-auto phrase">Phrase of the day</a>
     </div>
-    <span class="navbar-text">Demo Learning Site developed during Otus Web Developer 2019 course</span>
+    <span class="navbar-text right">Django Demo Site developed during Otus's Web Developer 2019 course</span>
 </nav>
 
 <div class="jumbotron jumbotron-fluid">
@@ -61,5 +77,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script type="text/javascript" src="../static/base_navbar_animation.js"></script>
 </body>
 </html>
