@@ -110,6 +110,19 @@ def courses_list(request):
 
 
 @login_required
+def courses_calendar(request):
+    # user = request.user
+    # student = user.student_profile if hasattr(user, 'student_profile') else None
+    # student_registrations = {course.id for course in courses if course.student_registered(student.id)}
+    courses = list(Course.objects.prefetch_related('registrations').all())
+    context = {
+        'courses': courses,
+    }
+    return render(request, 'calendar.html', context=context)
+
+
+
+@login_required
 def course_detail(request, pk):
     user = request.user
     student = user.student_profile if hasattr(user, 'student_profile') else None
