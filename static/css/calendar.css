@@ -1,11 +1,12 @@
 ::selection {
   background: rgba(0,0,0,.05);
 }
-body {
+section.calendar-month {
   padding: 20px;
   background: #d2d5e0;
   font-family: system-ui sans-serif;
 }
+
 ul, h1, h2, h3, h4 {
   margin: 0; padding: 0;
   list-style: none;
@@ -22,45 +23,8 @@ h1 {
 }
 
 
-/* Left Bar */
-nav.sections {
-  overflow: hidden;
-  display: block;
-  float: left;
-  width: 82px; height: auto;
-  margin-right: 20px;
-  background: #3bc1f8;
-  box-shadow: 0 1px 1px rgba(78,200,247,.35);
-  border-radius: 5px;
-  text-align: center;
-}
-  nav.sections li a {
-    display: block;
-    width: 100%; height: 82px;
-  }
-    nav.sections li:hover,
-    nav.sections li.active {
-      background: #00aced;
-      box-shadow: inset 0 1px 1px rgba(0,0,0,.07);
-    }
-    nav.sections li.notes a,
-    nav.sections li.calendar a,
-    nav.sections li.settings a {
-        background: url('http://ysfu.net/sprite.png') no-repeat;
-    }
-    nav.sections li.notes a {
-      background-position: 25px 25px;
-    }
-    nav.sections li.calendar a {
-        background-position: 25px -57px;
-    }
-    nav.sections li.settings a {
-        background-position: 25px -139px;
-    }
-
-
 /* Calendar */
-section.mounth {
+section.calendar-month {
   overflow: hidden;
   display: block;
   float: left;
@@ -92,7 +56,7 @@ section.mounth {
         width: 11px; height: 20px;
         margin-left: 30px;
         cursor: pointer;
-        background: url('http://ysfu.net/sprite.png') no-repeat;
+        /*background: url('http://ysfu.net/sprite.png') no-repeat;*/
       }
         header nav span:first-of-type {
           background-position: -77px -4px;
@@ -127,17 +91,17 @@ article {padding: 6px 0 25px 25px}
     border-radius: 2px;
     cursor: pointer;
   }
-  article span.disable {
+  article span.calendar-disable {
     color: #b6bacc;
     box-shadow: inset 0 0 1px 1px #f3f4f7;
   }
-    article span:not(.disable):hover {
+    article span:not(.calendar-disable):hover {
       background: #cdd0dd;
       box-shadow:
         inset 0 0 1px 1px #d9dce5,
         0 1px 3px -1px #cdd0dd;
     }
-    article span:not(.disable):active {
+    article span:not(.calendar-disable):active {
       background: #b9becf;
       box-shadow:
         inset 0 1px 2px rgba(0,0,0,.18),

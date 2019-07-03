@@ -2,21 +2,13 @@
 {% load staticfiles %}
 
 {% block body_block %}
-    <link rel="stylesheet" type="text/css" href="../static/css/calendar.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/calendar.css">
 
     <div class="alert alert-dark text-center" role="alert">
         <h2>Courses Calendar</h2>
     </div>
 
-    <nav role='navigation' class="sections">
-        <ul>
-            <li class="notes"><a href="#"></a></li>
-            <li class="calendar active"><a href="#"></a></li>
-            <li class="settings"><a href="#"></a></li>
-        </ul>
-    </nav>
-
-    <section class="mounth" id="July">
+    <section class="calendar-month" id="July">
         <header>
             <h1>JULY 2019</h1>
             <nav role='navigation'>
@@ -26,7 +18,7 @@
         </header>
 
         <article>
-            <div class="days">
+            <div class="calendar-weekdays">
                 <b>MO</b>
                 <b>TU</b>
                 <b>WE</b>
@@ -35,9 +27,10 @@
                 <b>SA</b>
                 <b>SU</b>
             </div>
-            <div class="dates">
-                <span class="disable">30</span>
-                <span class="disable">31</span>
+            <div class="calendar-dates">
+                <span class="calendar-disable">29</span>
+                <span class="calendar-disable">30</span>
+                <span class="calendar-disable">31</span>
 
                 <span>1</span>
                 <span>2</span>
@@ -71,15 +64,13 @@
                 <span>30</span>
                 <span>31</span>
 
-                <span class="disable">1</span>
-                <span class="disable">2</span>
-                <span class="disable">3</span>
-                <span class="disable">4</span>
-                <span class="disable">5</span>
-                <span class="disable">6</span>
-                <span class="disable">7</span>
-                <span class="disable">8</span>
-                <span class="disable">9</span>
+                <span class="calendar-disable">1</span>
+                <span class="calendar-disable">2</span>
+                <span class="calendar-disable">3</span>
+                <span class="calendar-disable">4</span>
+                <span class="calendar-disable">5</span>
+                <span class="calendar-disable">6</span>
+                <span class="calendar-disable">7</span>
             </div>
         </article>
     </section>
