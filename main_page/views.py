@@ -9,12 +9,9 @@ from django.contrib.auth import authenticate, login, logout
 
 from rest_framework.authtoken.models import Token
 
-from main_page.forms import UserForm, StudentProfileForm
+from main_page.forms import UserForm, StudentProfileForm, MonthYearForm
 from otus_final_project.settings import django_logger
-from main_page.models import (
-    Course,
-    CourseRegistration,
-)
+from main_page.models import Course, CourseRegistration
 
 
 def index_view(request):
@@ -110,19 +107,6 @@ def courses_list(request):
 
 
 @login_required
-def courses_calendar(request):
-    # user = request.user
-    # student = user.student_profile if hasattr(user, 'student_profile') else None
-    # student_registrations = {course.id for course in courses if course.student_registered(student.id)}
-    courses = list(Course.objects.prefetch_related('registrations').all())
-    context = {
-        'courses': courses,
-    }
-    return render(request, 'calendar.html', context=context)
-
-
-
-@login_required
 def course_detail(request, pk):
     user = request.user
     student = user.student_profile if hasattr(user, 'student_profile') else None
@@ -186,3 +170,27 @@ def cancel_course_registration(request, course_id, student_id):
         course_registration.delete()
 
     return HttpResponseRedirect(reverse('main_page:course_detail', args={course_id}))
+
+
+@login_required
+def courses_calendar(request):
+    user = request.user
+    student = user.student_profile if hasattr(user, 'student_profile') else None
+    today = date.today()
+
+    if request.method == 'POST':
+        month_year_form = MonthYearForm(data=request.POST)
+
+    else:
+        month_year_form = MonthYearForm(data={'year': today.year, 'month': today.month})
+
+    courses = Course.objects.prefetch_related('registrations')
+    student_registrations = {course.id for course in courses if course.student_registered(student.id)}
+
+    context = {
+        'courses': courses,
+        'student_id': student.id if student else None,
+        'student_registrations': student_registrations,
+    }
+
+    return render(request, 'calendar.html', context=context)
