@@ -11,5 +11,5 @@ var LatinProverbs = [
     "Natura nihil frustra facit!",
     "Si vis pacem, para bellum!",
     "Philosophum non facit barba!",
-    "In dubio abstine"
+    "In dubio abstine!"
 ];
