@@ -2,11 +2,48 @@
 {% load staticfiles %}
 
 {% block body_block %}
-    <div class="alert alert-dark text-center" role="alert">
-        <h2>{{ month_year_from.month }}  {{ month_year_from.year }} </h2>
+    {#    <div class="alert alert-dark text-center" role="alert">#}
+    {#        <h2>{{ month_year_from.month }} {{ month_year_from.year }} </h2>#}
+    {#    </div>#}
+
+    <div class="container-fluid col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <form id="calendar_form" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option selected value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="col-auto my-1">
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option selected value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">Show Courses Calendar</button>
+                </div>
+            </div>
+        </form>
     </div>
 
-    <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+
+    <div class="container-fluid col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <ul class="list-group">
             {% if courses %}
                 {% for course in courses %}
