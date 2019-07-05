@@ -1,19 +1,19 @@
 
-function randomInt(range) {
+function random_in_range(range) {
     return Math.floor((Math.random() * range));
 }
 
-function replacePhrase(text) {
+function replace_phrase(text) {
     let header = document.querySelector(".phrase");
 
     header.textContent = text;
 }
 
 function UpdateNavBar() {
-    let textIndex = randomInt(contentArray.length);
-    let phraseOfDay = contentArray[textIndex];
+    let textIndex = random_in_range(LatinProverbs.length);
+    let phraseOfDay = LatinProverbs[textIndex];
 
-    replacePhrase(phraseOfDay);
+    replace_phrase(phraseOfDay);
 }
 
 UpdateNavBar();

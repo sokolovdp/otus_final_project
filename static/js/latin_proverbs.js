@@ -1,4 +1,4 @@
-var contentArray = [
+var LatinProverbs = [
     "Acta non verba!",
     "Dum spiro, spero!",
     "Medice, cura te ipsum!",
