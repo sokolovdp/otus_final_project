@@ -30,9 +30,13 @@ urlpatterns = [
     path('api/v1/', include(api.urls)),
 ]
 
-
 if DEBUG:
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+urlpatterns += [
+    path('django-rq/', include('django_rq.urls'))
+]
+

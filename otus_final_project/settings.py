@@ -37,7 +37,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_rq',
 
     'main_page.apps.MainPageConfig',
 ]
@@ -101,7 +101,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'otus_final_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
@@ -202,3 +201,19 @@ LOGGING = {
 }
 logging.config.dictConfig(LOGGING)
 django_logger = logging.getLogger(name='django_logger')
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 360,
+    }
+}
+RQ_SHOW_ADMIN_LINK = True
+RQ_EXCEPTION_HANDLERS = []  # If you need custom exception handlers, 'path.to.my.handler'
