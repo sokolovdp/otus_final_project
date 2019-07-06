@@ -191,13 +191,24 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
         },
+        "rq_console": {
+            "level": "DEBUG",
+            "class": "rq.utils.ColorizingStreamHandler",
+            # "formatter": "rq_console",
+            "exclude": ["%(asctime)s"],
+        },
     },
     'loggers': {
         'django_logger': {
             'handlers': ['console'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
+        "rq.worker": {
+            "handlers": ["rq_console", ],
+            "level": "DEBUG"
+        },
     },
+
 }
 logging.config.dictConfig(LOGGING)
 django_logger = logging.getLogger(name='django_logger')
