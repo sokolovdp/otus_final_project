@@ -20,28 +20,28 @@ class LectureInline(admin.TabularInline):
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'number_of_lectures', 'description', 'price')
-    list_filter = ('id', 'number_of_lectures', 'price')
-    fields = [('id', 'title', 'number_of_lectures', 'price'), 'description']
+    list_display = ('title', 'number_of_lectures', 'description', 'price')
+    list_filter = ('number_of_lectures', 'price')
+    fields = [('title', 'number_of_lectures', 'price'), 'description']
     inlines = [LectureInline, ]
 
 
 class LectureAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'course', 'number_in_course')
-    list_filter = ('id', 'course',)
-    fields = [('id', 'number_in_course', 'title'), 'course']
+    list_display = ('title', 'course', 'number_in_course')
+    list_filter = ('course',)
+    fields = [('number_in_course', 'title'), 'course']
 
 
 class CourseRegistrationAdmin(admin.ModelAdmin):
-    list_display = ('id', 'student', 'course')
-    list_filter = ('id', 'course', 'student')
-    fields = ['id', 'student', 'course']
+    list_display = ('student', 'course')
+    list_filter = ('course', 'student')
+    fields = ['student', 'course']
 
 
 class CourseScheduleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'course', 'start_date')
-    list_filter = ('id', 'course', 'start_date')
-    fields = ['id', 'course', 'start_date']
+    list_display = ('course', 'start_date')
+    list_filter = ('course', 'start_date')
+    fields = ['course', 'start_date']
 
 
 admin.site.register(StudentProfile, StudentProfileAdmin)
