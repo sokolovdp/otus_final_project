@@ -196,8 +196,6 @@ def courses_calendar(request):
         start_date__gt=date(year=year, month=month, day=1),
         start_date__lt=date(year=year+2, month=12, day=31),
     )
-    # courses = [schedule.course for schedule in schedules]
-    # student_registrations = {course.id for course in courses if course.student_registered(student.id)}
     scheduled_courses = []
     for sch in schedules:
         course_data = {
