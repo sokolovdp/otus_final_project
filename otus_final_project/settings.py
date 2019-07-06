@@ -218,13 +218,9 @@ RQ_QUEUES = {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
+        'DEFAULT_TIMEOUT': 5,
     },
-    'low': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-        'DEFAULT_TIMEOUT': 360,
-    }
+
 }
 RQ_SHOW_ADMIN_LINK = True
 RQ_EXCEPTION_HANDLERS = []  # If you need custom exception handlers, 'path.to.my.handler'
