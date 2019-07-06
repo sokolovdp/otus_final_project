@@ -190,7 +190,6 @@ def courses_calendar(request):
     month = today.month
 
     all_errors = []
-
     if request.method == 'POST':
         month_year_form = MonthYearForm(data=request.POST)
         if month_year_form.is_valid():
@@ -199,20 +198,20 @@ def courses_calendar(request):
         else:
             for err_list in month_year_form.errors.values():
                 all_errors.append(' '.join(err_list))
-
     errors_string = ' '.join(all_errors)
+
     schedules = CourseSchedule.objects.select_related('course').filter(
         start_date__gte=date(year=year, month=month, day=1),
         start_date__lt=date(year=year, month=month, day=monthrange(year, month)[1]),
     )
     scheduled_courses = []
     for sch in schedules:
+        registered = student and sch.course.student_registered(student.id)
         course_data = {
             'start_date': sch.start_date,
             'id': sch.course.id,
             'title': sch.course.title,
-            'student_registered': 'you are registered' if student and sch.course.student_registered(
-                student.id) else ''
+            'student_registered': 'you are registered' if registered else ''
         }
         scheduled_courses.append(course_data)
     context = {
