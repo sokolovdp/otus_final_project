@@ -7,12 +7,15 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+import django_rq
 
 from rest_framework.authtoken.models import Token
 
 from main_page.forms import UserForm, StudentProfileForm, MonthYearForm
-from otus_final_project.settings import django_logger
 from main_page.models import Course, CourseRegistration, CourseSchedule
+from main_page.tasks import send_confirmation_mail
+
+from otus_final_project.settings import django_logger
 
 
 def index_view(request):
@@ -38,6 +41,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
+                django_rq.enqueue(send_confirmation_mail, user.email)
                 django_logger.info(f'successful user login: "{user.username}"')
                 return HttpResponseRedirect(reverse('index'))
             else:
