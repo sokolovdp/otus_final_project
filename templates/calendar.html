@@ -45,17 +45,23 @@
         </form>
     </div>
 
-    <div class="container-fluid col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <ul class="list-group">
             {% if courses %}
                 {% for course in courses %}
-                    <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                    <li class="list-group-item list-group-item-action">
+                        <a href="/learn/course_detail/{{ course.id }}">
+                            <em> {{ course.start_date }}&emsp;</em>
+                            <em>{{ course.title }}&emsp;&emsp;</em>
+                            <em>{{ course.student_registered }}&emsp;</em>
+                        </a>
+                    </li>
                 {% endfor %}
             {% else %}
-                <li><em>Unbelievable. No entries here so far</em>
+                <em>No scheduled courses yet!</em>
             {% endif %}
+
         </ul>
     </div>
-    <script type="text/javascript" src="/static/js/calendar.js"></script>
 
 {% endblock %}

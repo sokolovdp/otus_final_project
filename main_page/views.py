@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 
 from main_page.forms import UserForm, StudentProfileForm, MonthYearForm
 from otus_final_project.settings import django_logger
-from main_page.models import Course, CourseRegistration
+from main_page.models import Course, CourseRegistration, CourseSchedule
 
 
 def index_view(request):
@@ -192,18 +192,28 @@ def courses_calendar(request):
                 all_errors.append(' '.join(err_list))
 
     errors_string = ' '.join(all_errors)
-    courses = Course.objects.prefetch_related('registrations')
-    student_registrations = {course.id for course in courses if course.student_registered(student.id)}
-
+    schedules = CourseSchedule.objects.select_related('course').filter(
+        start_date__gt=date(year=year, month=month, day=1),
+        start_date__lt=date(year=year+2, month=12, day=31),
+    )
+    # courses = [schedule.course for schedule in schedules]
+    # student_registrations = {course.id for course in courses if course.student_registered(student.id)}
+    scheduled_courses = []
+    for sch in schedules:
+        course_data = {
+            'start_date': sch.start_date,
+            'id': sch.course.id,
+            'title': sch.course.title,
+            'student_registered': 'you are registered' if sch.course.student_registered(student.id) else ''
+        }
+        scheduled_courses.append(course_data)
     context = {
         'month': month,
         'year': year,
         'all_months': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         'all_years': [year, year+1, year+2],
-        'courses': courses,
-        'student_id': student.id if student else None,
-        'student_registrations': student_registrations,
-        'errors': errors_string,
+        'courses': scheduled_courses,
+        "errors": errors_string,
     }
 
     return render(request, 'calendar.html', context=context)
