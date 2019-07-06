@@ -177,25 +177,29 @@ def courses_calendar(request):
     user = request.user
     student = user.student_profile if hasattr(user, 'student_profile') else None
     today = date.today()
+    year = today.year
+    month = today.month
+
     all_errors = []
 
     if request.method == 'POST':
         month_year_form = MonthYearForm(data=request.POST)
         if month_year_form.is_valid():
-            year = month_year_form.year
-            month = month_year_form.month
+            year = month_year_form.cleaned_data['year']
+            month = month_year_form.cleaned_data['month']
         else:
             for err_list in month_year_form.errors.values():
                 all_errors.append(' '.join(err_list))
-    else:
-        month_year_form = MonthYearForm(initial={'year': today.year, 'month': today.month})
 
     errors_string = ' '.join(all_errors)
     courses = Course.objects.prefetch_related('registrations')
     student_registrations = {course.id for course in courses if course.student_registered(student.id)}
 
     context = {
-        'month_year_from': month_year_form,
+        'month': month,
+        'year': year,
+        'all_months': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        'all_years': [year, year+1, year+2],
         'courses': courses,
         'student_id': student.id if student else None,
         'student_registrations': student_registrations,

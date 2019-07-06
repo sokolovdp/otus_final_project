@@ -25,15 +25,8 @@ class CourseRegistrationForm(forms.ModelForm):
         fields = ('course', 'student')
 
 
-def validate_month(value):
-    return True if 1 <= value <= 12 else False
-
-
-def validate_year(value):
-    year = date.today().year
-    return True if year <= value <= year+3 else False
-
-
 class MonthYearForm(forms.Form):
-    month = forms.IntegerField(required=True, validators=[validate_year])
-    year = forms.IntegerField(required=True, validators=[validate_month])
+    min_year = date.today().year
+    max_year = min_year + 2
+    month = forms.IntegerField(required=True, min_value=1, max_value=12)
+    year = forms.IntegerField(required=True, min_value=min_year, max_value=max_year)
