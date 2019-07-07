@@ -226,6 +226,7 @@ def courses_calendar(request):
             'student_registered': 'you are registered' if registered else ''
         }
         scheduled_courses.append(course_data)
+
     context = {
         'month': month,
         'year': year,
@@ -234,5 +235,14 @@ def courses_calendar(request):
         'courses': scheduled_courses,
         "errors": errors_string,
     }
-
     return render(request, 'calendar.html', context=context)
+
+
+@login_required
+def admin_start_email_scheduler(request):
+    user = request.user
+    if user.is_staff:
+        pass
+
+    context = {}
+    return render(request, 'start_mail_scheduler.html', context=context)
