@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from calendar import monthrange
 
 from django.shortcuts import render
@@ -13,7 +13,7 @@ from rest_framework.authtoken.models import Token
 
 from main_page.forms import UserForm, StudentProfileForm, MonthYearForm
 from main_page.models import Course, CourseRegistration, CourseSchedule
-from main_page.tasks import send_confirmation_mail
+from main_page.tasks import send_confirmation_mail, send_course_begin_mails
 
 from otus_final_project.settings import django_logger
 
@@ -238,11 +238,38 @@ def courses_calendar(request):
     return render(request, 'calendar.html', context=context)
 
 
+IN_24_HOURS = 5  # 24 * 60 * 60
+FOREVER = 3  # None
+
+
 @login_required
 def admin_start_email_scheduler(request):
     user = request.user
-    if user.is_staff:
-        pass
 
-    context = {}
+    repeat = FOREVER
+    interval = IN_24_HOURS
+    queue_name = 'low'
+    result_ttl = 600
+    scheduler_name = 'default'
+
+    if request.method == 'POST' and user.is_staff:
+        scheduler = django_rq.get_scheduler(name=scheduler_name)
+        job_low = scheduler.schedule(     # Start  RQ-Scheduler to send warnings mails
+            datetime.utcnow(),
+            send_course_begin_mails,
+            repeat=FOREVER,
+            interval=IN_24_HOURS,
+            result_ttl=result_ttl,
+            queue_name=queue_name,
+        )
+        repeat = FOREVER
+        interval = IN_24_HOURS
+
+    context = {
+        'repeat': repeat,
+        'interval': interval,
+        'result_ttl': result_ttl,
+        'queue_name': 'low',
+        'scheduler_name': scheduler_name
+    }
     return render(request, 'start_mail_scheduler.html', context=context)

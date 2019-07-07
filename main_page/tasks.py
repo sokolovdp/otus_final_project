@@ -1,6 +1,5 @@
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 
-import django_rq
 from django_rq import job
 
 from django.core.mail import send_mass_mail, send_mail
@@ -47,18 +46,3 @@ def send_course_begin_mails():
 
     return True
 
-
-# Start  RQ-Scheduler to send warnings mails
-#
-# IN_24_HOURS = 5  # 24 * 60 * 60
-# FOREVER = 3  # None
-#
-# scheduler = django_rq.get_scheduler(name='low')
-# job_low = scheduler.schedule(
-#     datetime.utcnow(),
-#     send_course_begin_mails,
-#     repeat=FOREVER,
-#     interval=IN_24_HOURS,
-#     result_ttl=600,
-#     queue_name='low',
-# )
