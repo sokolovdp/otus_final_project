@@ -41,7 +41,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                django_rq.enqueue(send_confirmation_mail, user.email)
+                django_rq.enqueue(send_confirmation_mail, user.first_name, user.email)
                 django_logger.info(f'successful user login: "{user.username}"')
                 return HttpResponseRedirect(reverse('index'))
             else:
