@@ -10,8 +10,15 @@ from otus_final_project.settings import django_logger
 
 
 @job('default')
-def send_confirmation_mail(user_name=None, user_mail=None):
-    django_logger.info(f'\nconfirmation mail to {user_mail if user_mail else " - "}')
+def send_confirmation_mail(user_mail=None):
+    subject = 'Thank you for registering!'
+    message = f"""
+        Dear User,
+        Thank you for registering at Learn To Fly site!\n\n
+        Sincerely,
+        Learn to Fly Team"""
+    send_mail(subject, message, DEFAULT_FROM_EMAIL, [user_mail, ], fail_silently=True)
+    django_logger.info(f'\nconfirmation mail to {user_mail}')
     return True
 
 
@@ -38,7 +45,7 @@ def send_course_begin_mails():
             You are registered for the {mt[2]} course, which will start in {days} day(s)!\n\n
             Sincerely,
             Learn to Fly Team"""
-        to_mail = 'sokolovdp@gmail.com'  # mt[0]
+        to_mail = mt[0]
         message_tupples.append((subject, message, DEFAULT_FROM_EMAIL, [to_mail, ], ))
 
     django_logger.info(f'sending {len(message_tupples)} course begins mails')

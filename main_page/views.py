@@ -46,7 +46,6 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                django_rq.enqueue(send_confirmation_mail, user.first_name, user.email)
                 django_logger.info(f'successful user login: "{user.username}"')
                 return HttpResponseRedirect(reverse('index'))
             else:
@@ -81,6 +80,9 @@ def user_register(request):
 
                     Token.objects.get_or_create(user=user)
                     registered = True
+
+                    django_rq.enqueue(send_confirmation_mail, user.email)
+
                     django_logger.info('successful user registration!')
             except (IntegrityError, DatabaseError, Exception) as e:
                 all_errors.append(str(e))
