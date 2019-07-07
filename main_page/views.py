@@ -101,9 +101,11 @@ def user_register(request):
 def courses_list(request):
     user = request.user
     student = user.student_profile if hasattr(user, 'student_profile') else None
-    courses = list(Course.objects.prefetch_related('registrations').all())
+    courses = Course.objects.all()
     if student:
-        student_registrations = {course.id for course in courses if course.student_registered(student.id)}
+        student_registrations = {
+            cr.course.id for cr in CourseRegistration.objects.filter(student_id=student.id).all()
+        }
     else:
         student_registrations = []
     context = {
@@ -205,8 +207,14 @@ def courses_calendar(request):
         start_date__lt=date(year=year, month=month, day=monthrange(year, month)[1]),
     )
     scheduled_courses = []
+    if student:
+        student_registrations = {
+            cr.course.id for cr in CourseRegistration.objects.filter(student_id=student.id).all()
+        }
+    else:
+        student_registrations = {}
     for sch in schedules:
-        registered = student and sch.course.student_registered(student.id)
+        registered = student and sch.course.id in student_registrations
         course_data = {
             'start_date': sch.start_date,
             'id': sch.course.id,

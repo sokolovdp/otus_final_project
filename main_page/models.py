@@ -16,9 +16,6 @@ class Course(models.Model):
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=12, default=0.00)
 
-    def student_registered(self, student_id):
-        return True if self.registrations.filter(student_id=student_id).first() else False
-
 
 class Lecture(models.Model):
     title = models.CharField(max_length=200)
