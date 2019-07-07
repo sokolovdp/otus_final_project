@@ -34,8 +34,9 @@ def send_course_begin_mails():
         subject = f'{mt[2]} will start in {days} day(s)'
         message = f"""
             Dear {mt[1]},
-            You are registered for the {mt[2]} course, which will start in {days} day(s)!
-            \n\nSincerely, Learn to Fly Team"""
+            You are registered for the {mt[2]} course, which will start in {days} day(s)!\n\n
+            Sincerely,
+            Learn to Fly Team"""
         to_mail = 'sokolovdp@gmail.com'  # mt[0]
         message_tupples.append((subject, message, DEFAULT_FROM_EMAIL, [to_mail, ]))
 
