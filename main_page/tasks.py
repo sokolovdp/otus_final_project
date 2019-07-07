@@ -27,7 +27,9 @@ def send_course_begin_mails():
     ).all()
     courses = {sch.course for sch in schedules}
     registrations = CourseRegistration.objects.select_related('student', 'course').filter(course__in=courses).all()
-    mail_templates = [(rg.student.user.email, rg.student.user.first_name, rg.course.title) for rg in registrations]
+    mail_templates = [
+        (rg.student.user.email, rg.student.user.first_name, rg.course.title) for rg in registrations
+    ]
 
     message_tupples = []
     for mt in mail_templates:
