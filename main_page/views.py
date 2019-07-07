@@ -251,10 +251,11 @@ def admin_start_email_scheduler(request):
     queue_name = 'low'
     result_ttl = 600
     scheduler_name = 'default'
+    status = 'Stopped'
 
     if request.method == 'POST' and user.is_staff:
         scheduler = django_rq.get_scheduler(name=scheduler_name)
-        job_low = scheduler.schedule(     # Start  RQ-Scheduler to send warnings mails
+        job = scheduler.schedule(     # Start  RQ-Scheduler to send warnings mails
             datetime.utcnow(),
             send_course_begin_mails,
             repeat=FOREVER,
@@ -262,14 +263,14 @@ def admin_start_email_scheduler(request):
             result_ttl=result_ttl,
             queue_name=queue_name,
         )
-        repeat = FOREVER
-        interval = IN_24_HOURS
+        status = str(job)
 
     context = {
         'repeat': repeat,
         'interval': interval,
         'result_ttl': result_ttl,
         'queue_name': 'low',
-        'scheduler_name': scheduler_name
+        'scheduler_name': scheduler_name,
+        'status': status
     }
     return render(request, 'start_mail_scheduler.html', context=context)
