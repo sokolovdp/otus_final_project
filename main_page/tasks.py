@@ -17,15 +17,15 @@ def send_course_begin_mails():
     return True
 
 
-IN_24_HOURS = 24 * 60 * 60
-FOREVER = None
+IN_24_HOURS = 5  # 24 * 60 * 60
+FOREVER = 3  # None
 
 scheduler = django_rq.get_scheduler(name='low')
 job_low = scheduler.schedule(
     datetime.utcnow(),
     send_course_begin_mails,
-    repeat=3,
-    interval=5,
+    repeat=FOREVER,
+    interval=IN_24_HOURS,
     result_ttl=600,
     queue_name='low',
 )
