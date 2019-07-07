@@ -18,6 +18,11 @@ from main_page.tasks import send_confirmation_mail, send_course_begin_mails
 from otus_final_project.settings import django_logger
 
 
+IN_24_HOURS = 5  # 24 * 60 * 60
+FOREVER = 1  # None
+email_scheduler_status = 'Stopped'
+
+
 def index_view(request):
     context = {'active': 'home'}
     return render(request, 'index.html', context=context)
@@ -238,20 +243,16 @@ def courses_calendar(request):
     return render(request, 'calendar.html', context=context)
 
 
-IN_24_HOURS = 5  # 24 * 60 * 60
-FOREVER = 3  # None
-
-
 @login_required
 def admin_start_email_scheduler(request):
-    user = request.user
+    global email_scheduler_status
 
+    user = request.user
     repeat = FOREVER
     interval = IN_24_HOURS
     queue_name = 'low'
     result_ttl = 600
     scheduler_name = 'default'
-    status = 'Stopped'
 
     if request.method == 'POST' and user.is_staff:
         scheduler = django_rq.get_scheduler(name=scheduler_name)
@@ -263,8 +264,9 @@ def admin_start_email_scheduler(request):
             result_ttl=result_ttl,
             queue_name=queue_name,
         )
-        status = str(job)
+        email_scheduler_status = str(job)
 
+    status = email_scheduler_status
     context = {
         'repeat': repeat,
         'interval': interval,

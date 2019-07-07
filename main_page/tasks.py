@@ -39,10 +39,10 @@ def send_course_begin_mails():
             Sincerely,
             Learn to Fly Team"""
         to_mail = 'sokolovdp@gmail.com'  # mt[0]
-        message_tupples.append((subject, message, DEFAULT_FROM_EMAIL, [to_mail, ]))
+        message_tupples.append((subject, message, DEFAULT_FROM_EMAIL, [to_mail, ], ))
 
     django_logger.info(f'sending {len(message_tupples)} course begins mails')
-    send_mass_mail(tuple(message_tupples))
+    send_mass_mail(message_tupples, fail_silently=True)
 
     return True
 
