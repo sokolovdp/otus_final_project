@@ -1,0 +1,25 @@
+{#{% extends "admin/index.html" %}#}
+{% extends "django_rq/index.html" %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <style>#extra_func table {width: 100%;}</style>
+{% endblock %}
+
+{% block sidebar %}
+    {{ block.super }}
+    <div id="extra_func">
+        <div class="module">
+            <table>
+                <caption>Additional Services</caption>
+                <tbody>
+                    <tr>
+                        <th>
+                            <a href = "#">Start Email Scheduler</a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

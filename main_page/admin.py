@@ -49,3 +49,5 @@ admin.site.register(Course, CourseAdmin)
 admin.site.register(Lecture, LectureAdmin)
 admin.site.register(CourseRegistration, CourseRegistrationAdmin)
 admin.site.register(CourseSchedule, CourseScheduleAdmin)
+
+admin.site.index_template = 'extra_admin.html'

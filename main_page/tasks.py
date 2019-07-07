@@ -16,7 +16,7 @@ def send_confirmation_mail(user_name=None, user_mail=None):
     return True
 
 
-# @job('low')
+@job('low')
 def send_course_begin_mails():
     days = 23
     today = date.today()
@@ -32,8 +32,11 @@ def send_course_begin_mails():
     message_tupples = []
     for mt in mail_templates:
         subject = f'{mt[2]} will start in {days} day(s)'
-        message = f'Dear {mt[1]},\nyou are registered for the {mt[2]} course, which will start in {days} day(s)!'
-        to_mail = mt[0]
+        message = f"""
+            Dear {mt[1]},
+            You are registered for the {mt[2]} course, which will start in {days} day(s)!
+            \n\nSincerely, Learn to Fly Team"""
+        to_mail = 'sokolovdp@gmail.com'  # mt[0]
         message_tupples.append((subject, message, DEFAULT_FROM_EMAIL, [to_mail, ]))
 
     django_logger.info(f'sending {len(message_tupples)} course begins mails')
@@ -41,8 +44,6 @@ def send_course_begin_mails():
 
     return True
 
-
-send_course_begin_mails()
 
 # Start  RQ-Scheduler to send warnings mails
 #
