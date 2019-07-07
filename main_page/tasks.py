@@ -17,6 +17,8 @@ def send_course_begin_mails():
     return True
 
 
+# Start  RQ-Scheduler to send warnings mails
+
 IN_24_HOURS = 5  # 24 * 60 * 60
 FOREVER = 3  # None
 
