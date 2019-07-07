@@ -220,6 +220,12 @@ RQ_QUEUES = {
         'DB': 0,
         'DEFAULT_TIMEOUT': 5,
     },
+    'low': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 15,
+    },
 
 }
 RQ_SHOW_ADMIN_LINK = True
