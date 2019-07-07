@@ -230,3 +230,13 @@ RQ_QUEUES = {
 }
 RQ_SHOW_ADMIN_LINK = True
 RQ_EXCEPTION_HANDLERS = []  # If you need custom exception handlers, 'path.to.my.handler'
+
+import otus_final_project.secret_settings as secret
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = getattr(secret, 'EMAIL_HOST')
+EMAIL_PORT = getattr(secret, 'EMAIL_PORT')
+EMAIL_HOST_USER = getattr(secret, 'EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = getattr(secret, 'EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = 'Learn to fly'
+

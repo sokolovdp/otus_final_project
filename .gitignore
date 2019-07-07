@@ -56,6 +56,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 main_page/migration/
+otus_final_project/secret*
 
 # Sphinx documentation
 docs/_build/
