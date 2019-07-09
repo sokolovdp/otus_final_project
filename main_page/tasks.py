@@ -1,12 +1,11 @@
 from datetime import date, timedelta
 
 from django_rq import job
-
 from django.core.mail import send_mass_mail, send_mail
 
-from otus_final_project.settings import DEFAULT_FROM_EMAIL
+from otus_final_project.settings import DEFAULT_FROM_EMAIL, django_logger
+
 from main_page.models import CourseSchedule, CourseRegistration
-from otus_final_project.settings import django_logger
 
 
 @job('default')
