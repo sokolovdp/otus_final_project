@@ -28,7 +28,6 @@ class StudentUsernameSerializer(serializers.ModelSerializer):
         return student_profile.user.username
 
 
-# noinspection PyAbstractClass
 class RegisterUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=40)
     password = serializers.CharField(max_length=20)
@@ -37,7 +36,6 @@ class RegisterUserSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=80)
 
 
-# noinspection PyAbstractClass
 class UserUpdateSerializer(serializers.Serializer):
     pk = serializers.PrimaryKeyRelatedField(queryset=StudentProfile.objects)
     username = serializers.CharField(max_length=40, required=False)
@@ -86,13 +84,33 @@ class CourseSerializer(serializers.ModelSerializer):
         )
 
 
+class ShortCourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = (
+            'id',
+            'title',
+            'price',
+            'number_of_lectures',
+            'description',
+        )
+
+
 class CourseRegistrationSerializer(serializers.ModelSerializer):
     student = StudentUsernameSerializer()
-    course = CourseSerializer()
+    course = ShortCourseSerializer()
 
     class Meta:
         model = CourseRegistration
-        fields = ('id', 'student', 'course',)
+        fields = ('student', 'course',)
+
+
+class CourseRegistrationParamsSerializer(serializers.Serializer):
+    student = serializers.PrimaryKeyRelatedField(queryset=StudentProfile.objects)
+    course = serializers.PrimaryKeyRelatedField(queryset=Course.objects)
+
+    class Meta:
+        fields = ('student', 'course',)
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):

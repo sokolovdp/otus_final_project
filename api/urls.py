@@ -6,19 +6,17 @@ from rest_framework.authtoken.views import obtain_auth_token
 from api.views import (
     UserProfileViewSet,
     CourseViewSet,
-    StudentCourseRegistrationView,
+    StudentCourseRegistrationViewSet,
 )
 
 app_name = 'api'
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
-    path('get_auth_token/', obtain_auth_token),
-    path('course_register/<int:course_id>/<int:student_id>', StudentCourseRegistrationView.as_view())
+    path('get_auth_token', obtain_auth_token),
 ]
 
-router.register(r'users', UserProfileViewSet, basename='users')
-urlpatterns += router.urls
-
-router.register('courses', CourseViewSet, basename='courses')
+router.register('users', UserProfileViewSet, basename='api_users')
+router.register('courses', CourseViewSet, basename='api_courses')
+router.register('registration', StudentCourseRegistrationViewSet, basename='api_registration')
 urlpatterns += router.urls
