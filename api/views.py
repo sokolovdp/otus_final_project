@@ -1,9 +1,12 @@
+from datetime import date
+from calendar import monthrange
+
 from django.db import transaction, IntegrityError, DatabaseError
 from django.contrib.auth.models import User
 import django_rq
 
 from rest_framework.viewsets import ViewSet
-# from rest_framework.views import APIView
+from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication  # , SessionAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser  # AllowAny,
 from rest_framework.response import Response
@@ -14,6 +17,7 @@ from main_page.models import (
     StudentProfile,
     Course,
     CourseRegistration,
+    CourseSchedule,
 )
 
 from api.serializers import (
@@ -22,7 +26,9 @@ from api.serializers import (
     UserUpdateSerializer,
     CourseSerializer,
     CourseRegistrationSerializer,
-    CourseRegistrationParamsSerializer
+    CourseRegistrationParamsSerializer,
+    CourseScheduleSerializer,
+    MonthYearSerializer,
 )
 
 from otus_final_project.settings import django_logger
@@ -216,3 +222,21 @@ class StudentCourseRegistrationViewSet(ViewSet):
     def update(self, request, pk=None):
         return Response({'detail': 'not implemented yet'}, status=status.HTTP_404_NOT_FOUND)
 
+
+class MonthCourseCalendarView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    calendar_serializer = CourseScheduleSerializer
+    params_serializer = MonthYearSerializer
+
+    def get(self, request):
+        params_data = self.params_serializer(data=request.query_params)
+        params_data.is_valid(raise_exception=True)
+
+        month = params_data.validated_data['month']
+        year = params_data.validated_data['year']
+        schedules_query = CourseSchedule.objects.select_related('course').filter(
+            start_date__gte=date(year=year, month=month, day=1),
+            start_date__lt=date(year=year, month=month, day=monthrange(year, month)[1]),
+        )
+
+        return Response(self.calendar_serializer(schedules_query, many=True).data, status=status.HTTP_200_OK)

@@ -7,6 +7,7 @@ from api.views import (
     UserProfileViewSet,
     CourseViewSet,
     StudentCourseRegistrationViewSet,
+    MonthCourseCalendarView,
 )
 
 app_name = 'api'
@@ -14,6 +15,7 @@ router = DefaultRouter(trailing_slash=False)
 
 urlpatterns = [
     path('get_auth_token', obtain_auth_token),
+    path('calendar', MonthCourseCalendarView.as_view(), name='api_calendar')
 ]
 
 router.register('users', UserProfileViewSet, basename='api_users')
