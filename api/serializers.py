@@ -109,7 +109,7 @@ class CourseRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CourseRegistration
-        fields = ('student', 'course',)
+        fields = '__all__'
 
 
 class CourseRegistrationParamsSerializer(serializers.Serializer):
