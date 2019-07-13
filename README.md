@@ -31,7 +31,7 @@ Authorization:Token ec710681622a1d8042d606077612cdce7b84411f
 
 ```
 
-## RQ is used to run Async Worker and Scheduler. To run rq's worker and scheduler:
+## RQ https://python-rq.org/ is used to run Async Worker and Scheduler. To run rq's worker and scheduler:
 ```
 python manage.py rqworker
 python manage.py rqscheduler
