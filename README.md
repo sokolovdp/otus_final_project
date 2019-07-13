@@ -37,4 +37,4 @@ python manage.py rqworker
 python manage.py rqscheduler
 ```
 
-## @Mailgun is used as remote email server
+## @mailgun https://www.mailgun.com/ is used as remote email server
