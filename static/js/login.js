@@ -2,6 +2,23 @@
     Process login form: call login API, and in case of success redirect to main page
 */
 
+function sendApiRequest(url, method, json) {
+    $.ajax({
+        'url': url,
+        'data': json,
+        'method': method,
+        'dataType': 'json',
+        'contentType': 'application/json',
+        'processData': false,
+    })
+    .done(function (returnedHtml) {
+        $("#responseDiv").append(returnedHtml);
+    })
+    .fail(function () {
+        $("#responseDiv").append("This failed");
+    });
+}
+
 
 $('#login_form').on('submit', function (event) {
     event.preventDefault();
@@ -11,15 +28,6 @@ $('#login_form').on('submit', function (event) {
     });
     let json_data = JSON.stringify(values);
     console.log(json_data);
-    /*$.ajax({
-      type: 'POST',
-      url: 'https://url.com/users/register',
-      dataType: 'json',
-      data: json,
-      contentType: 'application/json',
-      success: function(data) {
-        alert(data)
-      }
-    });*/
+    sendApiRequest('/api/vi/login', 'POST', json_data)
 });
 
