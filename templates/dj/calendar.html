@@ -10,10 +10,10 @@
         <form id="calendar_form" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
-            <div class="form-row align-items-center">
+            <div class="form-inline">
 
                 <label for="month"></label>
-                <div class="col-auto my-1">
+                <div class="col-auto mb-2">
                     <select class="form-control custom-select mr-sm-2" name="month" id="month">
                         {% for m in all_months %}
                             {% if m == month %}
@@ -26,7 +26,7 @@
                 </div>
 
                 <label for="year"></label>
-                <div class="col-auto my-1">
+                <div class="col-auto mb-2">
                     <select class="form-control custom-select mr-sm-2" name="year" id="year">
                         {% for y in all_years %}
                             {% if y == year %}
@@ -37,7 +37,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-auto my-1">
+                <div class="col-auto mb-2">
                     <button type="submit" class="btn btn-primary">Show Calendar</button>
                 </div>
 
