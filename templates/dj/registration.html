@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'dj/base.html' %}
 {% load staticfiles %}
 
 {% block body_block %}
 
-    {% if student_registered %}
+    {% if registered %}
         <div class="alert alert-success text-center" role="alert">
-            You are registered for this course!
+            You are registered, login to access site!
         </div>
     {% elif errors %}
         <div class="alert alert-danger text-center" role="alert">
@@ -13,26 +13,38 @@
         </div>
     {% else %}
         <div class="alert alert-dark text-center" role="alert">
-            Course Registration page
+            <h2>Registration form</h2>
         </div>
+
         <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="panel panel-info">
                 <div class="panel-body">
+
                     <form id="signupform" class="form-horizontal" role="form" method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
 
                         <div class="form-group">
-                            <label for="course" class="col-md-3 control-label">Course</label>
+                            <label for="username" class="col-md-3 control-label">Username</label>
                             <div class="col-md-9">
-                                {{ course_registration_form.course }}
+                                <input id="id_username" type="text" class="form-control" name="username"
+                                       placeholder="User Name" value="{{ username }}">
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="student" class="col-md-3 control-label">Student</label>
+                            <label for="password" class="col-md-3 control-label">Password</label>
                             <div class="col-md-9">
-                                {{ course_registration_form.student }}
+                                <input type="password" class="form-control" name="password" value="{{ password }}"
+                                       placeholder="Password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-md-3 control-label">Email</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control" name="email" value="{{ email }}"
+                                       placeholder="Email Address">
                             </div>
                         </div>
 
@@ -41,7 +53,7 @@
                             <div class="col-md-offset-3 col-md-9">
                                 <button id="btn-signup" type="submit" class="btn btn-info"><i
                                         class="icon-hand-right"></i>
-                                    &nbsp Register
+                                    &nbsp Sign Up
                                 </button>
                             </div>
                         </div>
