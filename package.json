@@ -1,0 +1,21 @@
+{
+  "name": "otus_final_project",
+  "version": "1.0.0",
+  "description": "## Run application ``` python manage.py runserver ``` Django server will start at localhost:8000/",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sokolovdp/otus_final_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sokolovdp/otus_final_project/issues"
+  },
+  "homepage": "https://github.com/sokolovdp/otus_final_project#readme",
+  "dependencies": {}
+}
