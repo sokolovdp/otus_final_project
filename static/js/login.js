@@ -15,7 +15,7 @@ function successFunction(xhttp) {
 function failFunction(xhttp) {
     //
     console.log('FAIL!!!', xhttp.status);
-    document.getElementById("invalid-login").innerHTML = 'Pair Login/Password are invalid';
+    document.getElementById("invalid-login").innerHTML = '&nbsp&nbsp&nbsp&nbsp Pair login/password is invalid!';
 }
 
 
