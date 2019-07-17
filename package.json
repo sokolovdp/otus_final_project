@@ -17,5 +17,10 @@
     "url": "https://github.com/sokolovdp/otus_final_project/issues"
   },
   "homepage": "https://github.com/sokolovdp/otus_final_project#readme",
-  "dependencies": {}
+  "dependencies": {
+    "webpack": "^4.17.2"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.6"
+  }
 }

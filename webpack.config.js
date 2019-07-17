@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
+    mode: "development", // "production" | "development" | "none"
     entry: './static/js/login.js',
     output: {
         path: path.resolve(__dirname, './static'),
