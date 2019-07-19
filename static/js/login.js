@@ -46,7 +46,7 @@ $('#login_form').on('submit', function (event) {
     });
     let jsonString = JSON.stringify(values);
     console.log(jsonString);
-    sendPostRequest('/api/v1/login', jsonString)
+    sendPostRequest('/api/v1/get_auth_token', jsonString)
 });
 
 

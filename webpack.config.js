@@ -28,8 +28,11 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
-                test: /\.png$/,
-                loader: 'file-loader'
+                test: /\.(png|jpe?g|gif)$/,
+                loader: 'file-loader',
+                options: {
+                    publicPath: '/otus_final_project/static/images/',
+                },
             }
         ]
     },
@@ -38,10 +41,10 @@ module.exports = {
     },
     devtool: 'inline-source-map',
     devServer: {
-        port: '3001',
+        port: '7000',
         host: '0.0.0.0',
         proxy: {
-            '/api/v1': 'http://localhost:8000'
+            '/api/v1/': '127.0.0.1:8000'
         }
     },
     plugins: [

@@ -35,7 +35,10 @@ SECRET_KEY = 's%wci&^s4g$*e=6^(_9@2t+z(dbk2x!_m%0_#p&lbv47qulma!'
 DEBUG = True
 # DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+if DEBUG:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0', '[::1]', ]
+else:
+    ALLOWED_HOSTS = []
 
 # Application definition
 
