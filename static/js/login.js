@@ -7,15 +7,19 @@ var ApiToken = '';
 function successFunction(xhttp) {
     //
     let jsonString = xhttp.responseText;
-    console.log('SUCCESS!!!', xhttp.status, xhttp.responseText);
-    document.getElementById("invalid-login").innerHTML = '';
+    let message = 'You have logged in, API token='
+    let json_data = JSON.parse(jsonString)
+    ApiToken = json_data.token
+
+    document.getElementById("login-result").innerHTML = message + ApiToken;
+    document.getElementById("login-result").className = 'alert alert-success';
 }
 
 
 function failFunction(xhttp) {
-    //
-    console.log('FAIL!!!', xhttp.status);
-    document.getElementById("invalid-login").innerHTML = '&nbsp&nbsp&nbsp&nbsp Pair login/password is invalid!';
+
+    document.getElementById("login-result").innerHTML = 'Pair login/password is invalid!';
+    document.getElementById("login-result").className = 'alert alert-danger';
 }
 
 
@@ -45,7 +49,7 @@ $('#login_form').on('submit', function (event) {
         values[field.name] = field.value;
     });
     let jsonString = JSON.stringify(values);
-    console.log(jsonString);
+
     sendPostRequest('/api/v1/get_auth_token', jsonString)
 });
 
