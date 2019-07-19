@@ -44,7 +44,9 @@ module.exports = {
         port: '7000',
         host: '0.0.0.0',
         proxy: {
-            '/api/v1/': '127.0.0.1:8000'
+            '/api/v1/': 'http://0.0.0.0:8000'
+            // "secure": false,
+            // "changeOrigin": true
         }
     },
     plugins: [
