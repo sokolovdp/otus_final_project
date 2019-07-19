@@ -38,3 +38,10 @@ python manage.py rqscheduler
 ```
 
 ## @mailgun https://www.mailgun.com/ is used as remote email server
+
+## Use nodejs, npm, and webpack to build FE and run webpack-dev-server
+```
+npm run build
+
+npm run proxy
+```
