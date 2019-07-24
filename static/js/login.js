@@ -5,11 +5,12 @@
 var ApiToken = '';
 
 function successFunction(xhttp) {
-    //
     let jsonString = xhttp.responseText;
     let message = 'You have logged in, API token='
     let json_data = JSON.parse(jsonString)
+
     ApiToken = json_data.token
+    sessionStorage.setItem('apiToken', ApiToken);
 
     document.getElementById("login-result").innerHTML = message + ApiToken;
     document.getElementById("login-result").className = 'alert alert-success';

@@ -4,6 +4,8 @@ let year = today.getFullYear();
 let selectYear = document.getElementById('calendarYear');
 const YEAR_RANGE = 3;
 
+let apiToken = sessionStorage.getItem('apiToken');
+
 document.getElementById('calendarMonth').getElementsByTagName('option')[month].selected = true;
 
 for (let i = 0; i < YEAR_RANGE; i++) {

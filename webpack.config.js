@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     mode: "development", // "production" | "development" | "none"
-    entry: './static/js/login.js',
+    entry: ['./static/js/login.js', './static/js/calendar.js', ],
     output: {
         path: path.resolve(__dirname, './static'),
         filename: 'bundle.js',
