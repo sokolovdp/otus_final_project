@@ -42,10 +42,10 @@ function sendPostRequest(url, jsonString) {
 }
 
 
-$('#login_form').on('submit', function (event) {
+$('#loginForm').on('submit', function (event) {
     event.preventDefault();
     let values = {};
-    $.each($('#login_form').serializeArray(), function (i, field) {
+    $.each($('#loginForm').serializeArray(), function (i, field) {
         values[field.name] = field.value;
     });
     let jsonString = JSON.stringify(values);
