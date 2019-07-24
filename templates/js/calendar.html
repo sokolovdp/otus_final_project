@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Learn To Fly</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light mr-auto">
+    <a class="navbar-brand" href="#">
+        <img src="../../static/images/dj.png" width="30" height="30" alt="brand">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home</a>
+        </div>
+    </div>
+    <span class="navbar-text right">Django Demo Site - Otus's Web Developer 2019 course</span>
+</nav>
+
+<div class="alert alert-dark text-center" role="alert">
+    <h2>Calendar page</h2>
+</div>
+
+<div class="container-fluid col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <form id="calendar_form" class="form-horizontal" role="form" method="POST" enctype="text/plain">
+
+        <div class="form-inline">
+            <div class="col-auto mb-2">
+                <select class="form-control custom-select mr-sm-2" name="month" id="month">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option selected value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="col-auto mb-2">
+                <select class="form-control custom-select mr-sm-2" name="year" id="year">
+                    <option selected value="2019">2019</option>
+                    <option value="2020">2020</option>
+                </select>
+            </div>
+            <div class="col-auto mb-2">
+                <button type="submit" class="btn btn-primary">Show Calendar</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <ul class="list-group">
+        {% if courses %}
+            {% for course in courses %}
+                <li class="list-group-item list-group-item-action">
+                    <a href="/learn/course_detail/{{ course.id }}">
+                        <em> {{ course.start_date }}&emsp;</em>
+                        <em>{{ course.title }}&emsp;&emsp;</em>
+                        <em>{{ course.student_registered }}&emsp;</em>
+                    </a>
+                </li>
+            {% endfor %}
+        {% else %}
+            <em>No scheduled courses yet!</em>
+        {% endif %}
+
+    </ul>
+</div>
+
+
+</body>
+</html>
