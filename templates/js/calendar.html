@@ -36,14 +36,14 @@
 
         <div class="form-inline">
             <div class="col-auto mb-2">
-                <select class="form-control custom-select mr-sm-2" name="month" id="month">
+                <select class="form-control custom-select mr-sm-2" name="month" id="calendarMonth">
                     <option value="1">January</option>
                     <option value="2">February</option>
                     <option value="3">March</option>
                     <option value="4">April</option>
                     <option value="5">May</option>
                     <option value="6">June</option>
-                    <option selected value="7">July</option>
+                    <option value="7">July</option>
                     <option value="8">August</option>
                     <option value="9">September</option>
                     <option value="10">October</option>
@@ -84,6 +84,10 @@
     </ul>
 </div>
 
+<script type="text/javascript">
+    document.getElementById("calendarMonth").getElementsByTagName('option')[2].selected = true;
+
+</script>
 
 </body>
 </html>
