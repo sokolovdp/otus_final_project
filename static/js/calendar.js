@@ -19,13 +19,6 @@ function drawMonthYearForm() {
     }
 }
 
-function isEmpty(obj) {
-    for (let prop in obj) {
-        if (obj.hasOwnProperty(prop)) return false;
-    }
-    return true;
-}
-
 function failGetFunction(error) {
     console.error(error)
 }
@@ -59,7 +52,7 @@ function drawCalendar(coursesList) {
         liElement.className = "list-group-item list-group-item-action";
         aElement.appendChild(textElement);
         aElement.title = liText;
-        aElement.href = "#"
+        aElement.href = "#";
         liElement.appendChild(aElement);
         coursesListElement.appendChild(liElement)
     });
