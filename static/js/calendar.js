@@ -23,7 +23,7 @@ $('#calendarForm').on('submit', function (event) {
     });
     let jsonString = JSON.stringify(values);
 
-    console.log(jsonString)
+    console.log(jsonString, apiToken)
 
     // sendPostRequest('/api/v1/calendar', jsonString)
 });

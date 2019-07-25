@@ -14,6 +14,8 @@ function successFunction(xhttp) {
 
     document.getElementById("login-result").innerHTML = message + ApiToken;
     document.getElementById("login-result").className = 'alert alert-success';
+
+    window.location.href = "../../templates/js/calendar.html";
 }
 
 
@@ -24,7 +26,7 @@ function failFunction(xhttp) {
 }
 
 
-function sendPostRequest(url, jsonString) {
+function sendAuthPostRequest(url, jsonString) {
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
@@ -51,7 +53,7 @@ $('#loginForm').on('submit', function (event) {
     });
     let jsonString = JSON.stringify(values);
 
-    sendPostRequest('/api/v1/get_auth_token', jsonString)
+    sendAuthPostRequest('/api/v1/get_auth_token', jsonString)
 });
 
 
