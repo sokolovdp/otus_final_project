@@ -15,6 +15,19 @@ for (let i = 0; i < YEAR_RANGE; i++) {
     selectYear.appendChild(option)
 }
 
+
+function sendGetRequest(url, params) {
+    let headers = {'Authorization': 'Token ' + apiToken};
+    console.log(headers);
+    fetch(url, {headers: new Headers(headers)})
+      .then(response => response.json())
+       .then(data => {
+           console.log(data) // Prints result from `response.json()` in getRequest
+       })
+       .catch(error => console.error(error))
+}
+
+
 $('#calendarForm').on('submit', function (event) {
     event.preventDefault();
     let values = {};
@@ -23,9 +36,8 @@ $('#calendarForm').on('submit', function (event) {
     });
     let jsonString = JSON.stringify(values);
 
-    console.log(jsonString, apiToken)
+    sendGetRequest('/api/v1/calendar', [])
 
-    // sendPostRequest('/api/v1/calendar', jsonString)
 });
 
 
