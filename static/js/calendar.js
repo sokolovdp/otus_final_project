@@ -25,7 +25,7 @@ $('#calendarForm').on('submit', function (event) {
 
     console.log(jsonString)
 
-    sendPostRequest('/api/v1/calendar', jsonString)
+    // sendPostRequest('/api/v1/calendar', jsonString)
 });
 
 
