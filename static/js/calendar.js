@@ -1,18 +1,22 @@
-let today = new Date();
-let month = today.getMonth();
-let year = today.getFullYear();
-let selectYear = document.getElementById('calendarYear');
 const YEAR_RANGE = 3;
+const apiToken = sessionStorage.getItem('apiToken');
 
-let apiToken = sessionStorage.getItem('apiToken');
+function drawMonthYearForm() {
+    let today = new Date();
+    let month = today.getMonth();
+    let year = today.getFullYear();
+    let selectYear = document.getElementById('calendarYear');
 
-document.getElementById('calendarMonth').getElementsByTagName('option')[month].selected = true;
+    document.getElementById('calendarMonth')
+        .getElementsByTagName('option')[month]
+        .selected = true;
 
-for (let i = 0; i < YEAR_RANGE; i++) {
-    let option = document.createElement('option');
-    option.value = year + i;
-    option.text = year + i;
-    selectYear.appendChild(option)
+    for (let i = 0; i < YEAR_RANGE; i++) {
+        let option = document.createElement('option');
+        option.value = year + i;
+        option.text = year + i;
+        selectYear.appendChild(option)
+    }
 }
 
 function isEmpty(obj) {
@@ -40,7 +44,13 @@ function checkResponseStatus(response) {
 }
 
 function drawCalendar(coursesList) {
-    console.log(coursesList)
+    let coursesListTag = document.getElementById('coursesListTag');
+    coursesList.forEach(function (course) {
+        let liElement = document.createElement('li');
+        liElement.className = "list-group-item list-group-item-action";
+        liElement.appendChild(document.createTextNode(course.id));
+        coursesListTag.appendChild(liElement)
+    });
 }
 
 function sendGetRequest(url) {
@@ -54,6 +64,8 @@ function sendGetRequest(url) {
         .catch(error => failGetFunction(error));
 }
 
+
+drawMonthYearForm();
 
 $('#calendarForm').on('submit', function (event) {
     event.preventDefault();
