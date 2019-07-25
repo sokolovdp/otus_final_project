@@ -18,9 +18,12 @@ function successFunction(xhttp) {
 
 
 function failFunction(xhttp) {
-
-    document.getElementById("login-result").innerHTML = 'Pair login/password is invalid!';
     document.getElementById("login-result").className = 'alert alert-danger';
+    if (xhttp.status === 400) {
+        document.getElementById("login-result").innerHTML = 'Pair login/password is invalid!';
+    } else {
+        document.getElementById("login-result").innerHTML = 'Server error: ' + xhttp.status;
+    }
 }
 
 
