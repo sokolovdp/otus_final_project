@@ -16,21 +16,42 @@ for (let i = 0; i < YEAR_RANGE; i++) {
 }
 
 function isEmpty(obj) {
-    for(let prop in obj) {
-        if(obj.hasOwnProperty(prop)) return false;
+    for (let prop in obj) {
+        if (obj.hasOwnProperty(prop)) return false;
     }
     return true;
 }
 
+function failGetFunction(error) {
+    console.error(error)
+}
+
+function checkResponseStatus(response) {
+    let result = {};
+
+    if (response.status !== 200) {
+        // make the promise be rejected if we didn't get a 200 response
+        throw new Error("API response error: " + response.status)
+    } else {
+        result = response.json()
+        // console.log(result)
+    }
+    return result
+}
+
+function drawCalendar(coursesList) {
+    console.log(coursesList)
+}
+
 function sendGetRequest(url) {
     let headers = {'Authorization': 'Token ' + apiToken};
-    console.log(headers);
+
     fetch(url, {headers: new Headers(headers)})
-      .then(response => response.json())
-       .then(data => {
-           console.log(data) // Prints result from `response.json()` in getRequest
-       })
-       .catch(error => console.error(error))
+        .then(response => checkResponseStatus(response))
+        .then(result => {
+            drawCalendar(result)
+        })
+        .catch(error => failGetFunction(error));
 }
 
 
@@ -42,7 +63,6 @@ $('#calendarForm').on('submit', function (event) {
     });
 
     let urlString = '/api/v1/calendar?' + $.param(values);
-
     sendGetRequest(urlString)
 
 });
