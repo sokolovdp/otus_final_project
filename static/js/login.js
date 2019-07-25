@@ -4,16 +4,16 @@
 
 function successFunction(xhttp) {
     let jsonString = xhttp.responseText;
-    let message = 'You have logged in, API token=';
+    let message = 'You have logged in. ';
     let json_data = JSON.parse(jsonString);
 
     let apiToken = json_data.token;
     sessionStorage.setItem('apiToken', apiToken);
 
-    document.getElementById("login-result").innerHTML = message + apiToken;
+    document.getElementById("login-result").innerHTML = 'Continue to <a href="../../templates/js/calendar.html">calendar</a>';
     document.getElementById("login-result").className = 'alert alert-success';
 
-    window.location.href = "../../templates/js/calendar.html";
+    // window.location.href = "../../templates/js/calendar.html";
 }
 
 
