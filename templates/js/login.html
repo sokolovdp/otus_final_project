@@ -32,12 +32,15 @@
     <form id="loginForm" class="form-horizontal" role="form" method="POST" enctype="text/plain">
         <div class="form-inline">
             <div class="col-auto mb-2">
+                <label for="username"></label>
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username"
                        required>
             </div>
             <div class="col-auto mb-2">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                       required>
+                <label for="password">
+                </label><input type="password" class="form-control" id="password" name="password"
+                               placeholder="Password"
+                               required>
             </div>
             <button class="btn btn-primary col-auto mb-2" type="submit">Log In</button>
         </div>
@@ -46,7 +49,7 @@
 </div>
 
 <script src="../../static/libs/jquery_331.js"></script>
-<script src="../../static/libs/poper_min.js"></script>
+<script src="../../static/libs/poper.js"></script>
 <script src="../../static/libs/bootstrap_431.js"></script>
 
 
