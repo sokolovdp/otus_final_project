@@ -2,10 +2,10 @@ const YEAR_RANGE = 3;
 const apiToken = sessionStorage.getItem('apiToken');
 
 function drawMonthYearForm() {
-    let today = new Date();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    let selectYear = document.getElementById('calendarYear');
+    const today = new Date();
+    const month = today.getMonth();
+    const year = today.getFullYear();
+    const selectYear = document.getElementById('calendarYear');
 
     document.getElementById('calendarMonth')
         .getElementsByTagName('option')[month]
@@ -35,26 +35,38 @@ function checkResponseStatus(response) {
 
     if (response.status !== 200) {
         // make the promise be rejected if we didn't get a 200 response
-        throw new Error("API response error: " + response.status)
+        throw new Error("API response status: " + response.status)
     } else {
         result = response.json()
-        // console.log(result)
     }
     return result
 }
 
 function drawCalendar(coursesList) {
-    let coursesListTag = document.getElementById('coursesListTag');
+    let coursesListElement = document.getElementById('coursesListTag');
+    $(coursesListElement).empty();  // clear previous calendar data
+
     coursesList.forEach(function (course) {
+        let liText =
+            'Id: ' + course.id +
+            ' starts on: ' + course.start_date +
+            ' title: ' + course.course.title +
+            ' price: ' + course.course.price + '$';
         let liElement = document.createElement('li');
+        let textElement = document.createTextNode(liText);
+        let aElement = document.createElement('a');
+
         liElement.className = "list-group-item list-group-item-action";
-        liElement.appendChild(document.createTextNode(course.id));
-        coursesListTag.appendChild(liElement)
+        aElement.appendChild(textElement);
+        aElement.title = liText;
+        aElement.href = "#"
+        liElement.appendChild(aElement);
+        coursesListElement.appendChild(liElement)
     });
 }
 
 function sendGetRequest(url) {
-    let headers = {'Authorization': 'Token ' + apiToken};
+    const headers = {'Authorization': 'Token ' + apiToken};
 
     fetch(url, {headers: new Headers(headers)})
         .then(response => checkResponseStatus(response))
@@ -63,7 +75,6 @@ function sendGetRequest(url) {
         })
         .catch(error => failGetFunction(error));
 }
-
 
 drawMonthYearForm();
 
@@ -74,7 +85,7 @@ $('#calendarForm').on('submit', function (event) {
         values[field.name] = field.value;
     });
 
-    let urlString = '/api/v1/calendar?' + $.param(values);
+    const urlString = '/api/v1/calendar?' + $.param(values);
     sendGetRequest(urlString)
 
 });
