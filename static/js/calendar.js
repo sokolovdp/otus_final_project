@@ -15,8 +15,14 @@ for (let i = 0; i < YEAR_RANGE; i++) {
     selectYear.appendChild(option)
 }
 
+function isEmpty(obj) {
+    for(let prop in obj) {
+        if(obj.hasOwnProperty(prop)) return false;
+    }
+    return true;
+}
 
-function sendGetRequest(url, params) {
+function sendGetRequest(url) {
     let headers = {'Authorization': 'Token ' + apiToken};
     console.log(headers);
     fetch(url, {headers: new Headers(headers)})
@@ -34,9 +40,10 @@ $('#calendarForm').on('submit', function (event) {
     $.each($('#calendarForm').serializeArray(), function (i, field) {
         values[field.name] = field.value;
     });
-    let jsonString = JSON.stringify(values);
 
-    sendGetRequest('/api/v1/calendar', [])
+    let urlString = '/api/v1/calendar?' + $.param(values);
+
+    sendGetRequest(urlString)
 
 });
 
