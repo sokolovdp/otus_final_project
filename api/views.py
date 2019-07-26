@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser  # AllowAny,
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import NotAcceptable
 
 from main_page.models import (
     StudentProfile,
@@ -72,9 +73,8 @@ class UserProfileViewSet(ViewSet):
                 new_student_profile = StudentProfile(user=new_user, category='student')
                 new_student_profile.save()
                 Token.objects.get_or_create(user=new_user)
-
         except (IntegrityError, DatabaseError, Exception) as e:
-            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            raise NotAcceptable(detail=str(e))
         else:
             send_registration_confirmation_mail(username=new_user.username, email=new_user.email)
             return Response(serializer.validated_data)
@@ -148,6 +148,10 @@ class StudentCourseRegistrationViewSet(ViewSet):
     params_serializer = CourseRegistrationParamsSerializer
     queryset = CourseRegistration.objects.prefetch_related('student', 'course')
     error_message = 'user is not allowed to run request'
+    user = None
+    student = None
+    course = None
+    registration = None
 
     @staticmethod
     def user_allowed_to_run_request(authorized_user: User, student_param: StudentProfile) -> bool:
@@ -159,49 +163,39 @@ class StudentCourseRegistrationViewSet(ViewSet):
             return False
         return True
 
-    def create(self, request):
-        user = request.user
+    def validate_params_and_user(self, request):
+        self.user = request.user
         params_data = self.params_serializer(data=request.query_params)
         params_data.is_valid(raise_exception=True)
-        course = params_data.validated_data['course']
-        student = params_data.validated_data['student']
+        self.course = params_data.validated_data['course']
+        self.student = params_data.validated_data['student']
 
-        if not self.user_allowed_to_run_request(user, student):
-            return Response({'detail': self.error_message}, status=status.HTTP_403_FORBIDDEN)
+        if not self.user_allowed_to_run_request(self.user, self.student):
+            raise NotAcceptable(detail=self.error_message)
 
-        registration = CourseRegistration.objects.filter(
-            student_id=student.pk,
-            course_id=course.pk
+        self.registration = self.queryset.filter(
+            student_id=self.student.pk,
+            course_id=self.course.pk
         ).first()
-        if not registration:
+
+    def create(self, request):
+        self.validate_params_and_user(request)
+        if not self.registration:
             try:
-                registration = CourseRegistration(student=student, course=params_data.validated_data['course'])
+                registration = CourseRegistration(student=self.student, course=self.course)
                 registration.save()
             except (DatabaseError, Exception) as e:
-                return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                raise NotAcceptable(detail=str(e))
 
-        return Response({'registration_id': registration.pk}, status=status.HTTP_200_OK)
+        return Response({'registration_id': self.registration.pk}, status=status.HTTP_200_OK)
 
     def destroy(self, request, pk=None):
-        user = request.user
-        params_data = self.params_serializer(data=request.query_params)
-        params_data.is_valid(raise_exception=True)
-        course = params_data.validated_data['course']
-        student = params_data.validated_data['student']
-
-        if not self.user_allowed_to_run_request(user, student):
-            return Response({'detail': self.error_message}, status=status.HTTP_403_FORBIDDEN)
-
-        registration = CourseRegistration.objects.filter(
-            student_id=student.pk,
-            course_id=course.pk
-        ).first()
-
-        if registration:
+        self.validate_params_and_user(request)
+        if self.registration:
             try:
-                registration.delete()
+                self.registration.delete()
             except (DatabaseError, Exception) as e:
-                return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+                raise NotAcceptable(detail=str(e))
 
         return Response({}, status=status.HTTP_200_OK)
 
