@@ -72,12 +72,12 @@ class UserProfileViewSet(ViewSet):
                 new_user.save()
                 new_student_profile = StudentProfile(user=new_user, category='student')
                 new_student_profile.save()
-                Token.objects.get_or_create(user=new_user)
+                token = Token.objects.get_or_create(user=new_user)
         except (IntegrityError, DatabaseError, Exception) as e:
             raise NotAcceptable(detail=str(e))
         else:
             send_registration_confirmation_mail(username=new_user.username, email=new_user.email)
-            return Response(serializer.validated_data)
+            return Response({'token': token})
 
     def list(self, request):
         serializer = self.student_profile_serializer(self.queryset, many=True)
