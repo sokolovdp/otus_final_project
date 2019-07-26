@@ -119,10 +119,11 @@ class CourseRegistrationParamsSerializer(serializers.Serializer):
 class StudentProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     courses_registrations = CourseRegistrationSerializer(many=True)
+    student_id = serializers.IntegerField(source='id')
 
     class Meta:
         model = StudentProfile
-        fields = ('user', 'courses_registrations',)
+        fields = ('student_id', 'user', 'courses_registrations',)
 
 
 class MonthYearSerializer(serializers.Serializer):
