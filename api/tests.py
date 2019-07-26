@@ -63,10 +63,25 @@ class ApiTestCase(APITestCase):
         response = self.api_client.get(path='/api/v1/users')
         self.assertTrue(len(response.data) == 3, 'list request must return 3 user/students')
 
-        # retrieve 1st users/students
+        # update 1st users/student
+        response = self.api_client.put(
+            path=f'/api/v1/users/{student_id}',
+            data=json.dumps(
+                {
+                    "first_name": f"mutated",
+                }
+            ),
+            content_type='application/json',
+        )
+        self.assertTrue(
+            response.data['first_name'] == 'mutated',
+            'update request must return user/student first_name'
+        )
+
+        # retrieve 1st users/student
         response = self.api_client.get(path=f'/api/v1/users/{student_id}')
         self.assertTrue(
-            response.data['user']['username'] == 'api_test_0',
+            response.data['user']['first_name'] == 'mutated',
             'get request must return 1st user/student'
         )
 
