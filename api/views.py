@@ -51,13 +51,13 @@ def check_permissions(request):
     return [permission() for permission in permission_classes]
 
 
-class UserProfileViewSet(ViewSet):
+class StudentProfileViewSet(ViewSet):
     authentication_classes = (TokenAuthentication,)
 
     def get_permissions(self):
         return check_permissions(self)
 
-    queryset = StudentProfile.objects.prefetch_related('courses_registrations')
+    queryset = StudentProfile.objects.select_related('user').prefetch_related('courses_registrations')
     student_profile_serializer = StudentProfileSerializer
     user_register_serializer = RegisterUserSerializer
     user_update_serializer = UserUpdateSerializer
@@ -107,10 +107,12 @@ class UserProfileViewSet(ViewSet):
             return Response(serializer.validated_data)
 
     def destroy(self, request, pk=None):
-        user_ = self.queryset.filter(pk=pk).first()
-        if user_:
+        student_ = self.queryset.filter(pk=pk).first()
+        if student_:
+            user_ = student_.user
             user_.delete()
-            return Response(self.student_profile_serializer(user_).data)
+            student_.delete()
+            return Response({})
         else:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
 
