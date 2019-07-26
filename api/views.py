@@ -84,11 +84,11 @@ class StudentProfileViewSet(ViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        user_ = self.queryset.filter(id=pk).first()
+        user_ = self.queryset.filter(id=int(pk)).first()
         return Response(self.student_profile_serializer(user_).data)
 
     def update(self, request, pk=None):
-        request.data.update(dict(pk=pk))
+        request.data.update(dict(pk=int(pk)))
         serializer = self.user_update_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user_new_data = serializer.validated_data
@@ -107,7 +107,7 @@ class StudentProfileViewSet(ViewSet):
             return Response(serializer.validated_data)
 
     def destroy(self, request, pk=None):
-        student_ = self.queryset.filter(pk=pk).first()
+        student_ = self.queryset.filter(pk=int(pk)).first()
         if student_:
             user_ = student_.user
             user_.delete()
