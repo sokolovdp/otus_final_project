@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class StudentProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile', null=False)
     category = models.CharField(max_length=40, null=True)
 
     def __str__(self):

@@ -101,9 +101,11 @@ class ApiTestCase(APITestCase):
             response.status_code == 200,
             'delete request must return status 200'
         )
-        response = self.api_client.get(path='/api/v1/students')
 
-        print('\n\n-->', len(response.data))
+        response = self.api_client.get(path='/api/v1/students')
+        print('\n\n-->', len(response.data), student_id)
+        for t in response.data:
+            print('student_id=', t['student_id'])
 
         self.assertTrue(len(response.data) == 2, 'after delete list request must return 2 user/students')
 
