@@ -124,15 +124,6 @@ class CourseViewSet(ViewSet):
     queryset = Course.objects.prefetch_related('lectures', 'schedules', 'registrations')
     course_serializer = CourseSerializer
 
-    def create(self, request):
-        return Response({'detail': 'not implemented yet'}, status=status.HTTP_404_NOT_FOUND)
-
-    def update(self, request, pk=None):
-        return Response({'detail': 'not implemented yet'}, status=status.HTTP_404_NOT_FOUND)
-
-    def destroy(self, request, pk=None):
-        return Response({'detail': 'not implemented yet'}, status=status.HTTP_404_NOT_FOUND)
-
     def list(self, request):
         serializer = self.course_serializer(self.queryset, many=True)
         return Response(serializer.data)
@@ -206,9 +197,6 @@ class StudentCourseRegistrationViewSet(ViewSet):
     def retrieve(self, request, pk=None):
         course = self.queryset.filter(id=pk).first()
         return Response(self.registration_serializer(course).data)
-
-    def update(self, request, pk=None):
-        return Response({'detail': 'not implemented yet'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class MonthCourseCalendarView(APIView):
