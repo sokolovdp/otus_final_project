@@ -26,7 +26,6 @@ from api.serializers import (
     CourseSerializer,
     CourseRegistrationSerializer,
     CourseRegistrationParamsSerializer,
-    CourseScheduleSerializer,
     MonthYearSerializer,
 )
 
@@ -34,22 +33,28 @@ from otus_final_project.settings import django_logger
 
 from main_page.tasks import send_registration_confirmation_mail
 
+from main_page.views import get_student_registrations
+
+
+def check_permissions(request):
+    """
+    Instantiates and returns the list of permissions that this view requires.
+    """
+    django_logger.info(f'user profile action request: "{request.action}"')
+    if request.action in ('create', 'destroy', 'update'):
+        permission_classes = (IsAdminUser,)
+    elif request.action in ('retrieve', 'list'):
+        permission_classes = (IsAuthenticated,)
+    else:
+        permission_classes = ()
+    return [permission() for permission in permission_classes]
+
 
 class UserProfileViewSet(ViewSet):
     authentication_classes = (TokenAuthentication,)
 
     def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        django_logger.info(f'user profile action request: "{self.action}"')
-        if self.action in ('create', 'destroy', 'update'):
-            permission_classes = (IsAdminUser,)
-        elif self.action in ('retrieve', 'list'):
-            permission_classes = (IsAuthenticated,)
-        else:
-            permission_classes = ()
-        return [permission() for permission in permission_classes]
+        return check_permissions(self)
 
     queryset = StudentProfile.objects.prefetch_related('courses_registrations')
     student_profile_serializer = StudentProfileSerializer
@@ -114,17 +119,7 @@ class CourseViewSet(ViewSet):
     authentication_classes = (TokenAuthentication,)
 
     def get_permissions(self):
-        """
-        Instantiates and returns the list of permissions that this view requires.
-        """
-        django_logger.info(f'user profile action request: "{self.action}"')
-        if self.action in ('create', 'destroy', 'update'):
-            permission_classes = (IsAdminUser,)
-        elif self.action in ('retrieve', 'list'):
-            permission_classes = (IsAuthenticated,)
-        else:
-            permission_classes = ()
-        return [permission() for permission in permission_classes]
+        return check_permissions(self)
 
     queryset = Course.objects.prefetch_related('lectures', 'schedules', 'registrations')
     course_serializer = CourseSerializer
@@ -201,6 +196,7 @@ class StudentCourseRegistrationViewSet(ViewSet):
             student_id=student.pk,
             course_id=course.pk
         ).first()
+
         if registration:
             try:
                 registration.delete()
@@ -223,18 +219,24 @@ class StudentCourseRegistrationViewSet(ViewSet):
 
 class MonthCourseCalendarView(APIView):
     authentication_classes = (TokenAuthentication,)
-    calendar_serializer = CourseScheduleSerializer
     params_serializer = MonthYearSerializer
 
     def get(self, request):
+        profile = request.user.student_profile
+        registrations = get_student_registrations(profile)
+
         params_data = self.params_serializer(data=request.query_params)
         params_data.is_valid(raise_exception=True)
 
         month = params_data.validated_data['month']
         year = params_data.validated_data['year']
-        schedules_query = CourseSchedule.objects.select_related('course').filter(
+        monthly_schedules = CourseSchedule.objects.select_related('course').filter(
             start_date__gte=date(year=year, month=month, day=1),
             start_date__lt=date(year=year, month=month, day=monthrange(year, month)[1]),
-        )
-
-        return Response(self.calendar_serializer(schedules_query, many=True).data, status=status.HTTP_200_OK)
+        ).values('course__price', 'course__title', 'course_id', 'start_date')
+        for sch in monthly_schedules:
+            if sch['course_id'] in registrations:
+                sch['registered'] = True
+            else:
+                sch['registered'] = False
+        return Response(monthly_schedules, status=status.HTTP_200_OK)

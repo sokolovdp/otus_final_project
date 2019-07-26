@@ -139,11 +139,3 @@ class MonthYearSerializer(serializers.Serializer):
         if attrs.get('year') is None:
             attrs['year'] = date.today().year
         return attrs
-
-
-class CourseScheduleSerializer(serializers.ModelSerializer):
-    course = CourseSerializer()
-
-    class Meta:
-        model = CourseSchedule
-        fields = '__all__'
