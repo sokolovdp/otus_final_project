@@ -1,17 +1,19 @@
 import json
+
 from django.test import TestCase
-from django.contrib.auth.models import User
 from django.test.client import Client
+from django.contrib.auth.models import User
+
+from rest_framework.test import APIClient, APITestCase
+
+MAX_STUDENTS = 3
 
 
-class ApiTestCase(TestCase):
-    allow_database_queries = True
+class ApiTestCase(APITestCase):
     admin_username = 'test_admin'
     admin_password = 'test_password'
     admin_api_token = None
-    user = None
-    student_profile = None
-
+    api_client = None
     api_token = None
 
     def setUp(self):
@@ -19,9 +21,10 @@ class ApiTestCase(TestCase):
             username=self.admin_username,
             email='testemail@test.com',
             password=self.admin_password)
-        # test_client = Client()
-        # test_client.login(username=self.username, password=self.password)
-        response = self.client.post(
+
+        self.api_client = APIClient()
+
+        response = self.api_client.post(
             path='/api/v1/get_auth_token',
             data=json.dumps(
                 {
@@ -33,27 +36,39 @@ class ApiTestCase(TestCase):
         self.admin_api_token = response.data['token']
 
     def test_user_register(self):
-        response = self.client.post(
-            path='/api/v1/users',
-            data=json.dumps(
-                {
-                    "username": "api_test",
-                    "password": "api_test",
-                    "email": "sokolovdp@gmail.com",
-                    "first_name": "tuti",
-                    "last_name": "fruti"
-                }
-            ),
-            content_type='application/json',
-            authorization=f'Token {self.admin_api_token}'
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_api_token)
+
+        # create 3 new user/students
+        student_id = 0
+        for i in range(MAX_STUDENTS):
+            response = self.api_client.post(
+                path='/api/v1/users',
+                data=json.dumps(
+                    {
+                        "username": f"api_test_{i}",
+                        "password": f"api_test_{i}",
+                        "email": f"test{i}@gmail.com",
+                        "first_name": f"tuti{i}",
+                        "last_name": f"fruti{i}"
+                    }
+                ),
+                content_type='application/json',
+            )
+            self.client.cookies = response.cookies
+            self.assertTrue('token' in response.data, 'user-student create must return token')
+            if i == 0:
+                student_id = response.data['student_id']
+
+        # get list of 3 users/students
+        response = self.api_client.get(path='/api/v1/users')
+        self.assertTrue(len(response.data) == 3, 'list request must return 3 user/students')
+
+        # retrieve 1st users/students
+        response = self.api_client.get(path=f'/api/v1/users/{student_id}')
+        self.assertTrue(
+            response.data['user']['username'] == 'api_test_0',
+            'get request must return 1st user/student'
         )
-        self.client.cookies = response.cookies
-        try:
-            self.api_token = response.data['token']
-        except KeyError:
-            print('\nNo token in response.data=', response.data)
-            raise
-        self.assertEqual(1, 1, 'reason 0')
 
     def test_user_profile_viewset(self):
         self.assertEqual(1, 1, 'reason 1')

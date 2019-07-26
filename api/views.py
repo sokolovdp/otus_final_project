@@ -77,7 +77,7 @@ class UserProfileViewSet(ViewSet):
             raise NotAcceptable(detail=str(e))
         else:
             send_registration_confirmation_mail(username=new_user.username, email=new_user.email)
-            return Response({'token': str(token)})
+            return Response({'user_id': new_user.id, 'student_id': new_student_profile.id, 'token': str(token)})
 
     def list(self, request):
         serializer = self.student_profile_serializer(self.queryset, many=True)
