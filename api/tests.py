@@ -42,10 +42,10 @@ class ApiTestCase(APITestCase):
             content_type='application/json')
         self.admin_api_token = response.data['token']
 
-    def test_user_register(self):
+    def test_student_profile_viewset(self):
         self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_api_token)
 
-        # create 3 new user/students
+        # Create 3 new user/students
         student_id = 0
         for i in range(MAX_STUDENTS):
             response = self.api_client.post(
@@ -70,7 +70,7 @@ class ApiTestCase(APITestCase):
         response = self.api_client.get(path='/api/v1/students')
         self.assertTrue(len(response.data) == 3, 'list request must return 3 user/students')
 
-        # update 1st users/student
+        # Update 1st users/student
         response = self.api_client.put(
             path=f'/api/v1/students/{student_id}',
             data=json.dumps(
@@ -91,7 +91,7 @@ class ApiTestCase(APITestCase):
             'get request must return 1st user/student'
         )
 
-        # destroy 1st users/student
+        # Destroy 1st users/student
         response = self.api_client.delete(
             path=f'/api/v1/students/{student_id}',
             content_type='application/json',
