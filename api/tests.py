@@ -9,11 +9,14 @@ from rest_framework.test import APIClient, APITestCase
 from main_page.models import (
     StudentProfile,
     Course,
+    Lecture,
     CourseRegistration,
     CourseSchedule,
 )
 
 MAX_STUDENTS = 3
+MAX_COURSES = 2
+MAX_LECTURES = 2
 
 
 class ApiTestCase(APITestCase):
@@ -30,7 +33,6 @@ class ApiTestCase(APITestCase):
             password=self.admin_password)
 
         self.api_client = APIClient()
-
         response = self.api_client.post(
             path='/api/v1/get_auth_token',
             data=json.dumps(
@@ -41,13 +43,12 @@ class ApiTestCase(APITestCase):
             ),
             content_type='application/json')
         self.admin_api_token = response.data['token']
-
-    def test_student_profile_viewset(self):
         self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_api_token)
 
+    def test_student_profile_viewset(self):
         # Create 3 new user/students
         student_id = 0
-        for i in range(MAX_STUDENTS):
+        for i in range(1, MAX_STUDENTS+1):
             response = self.api_client.post(
                 path='/api/v1/students',
                 data=json.dumps(
@@ -63,21 +64,20 @@ class ApiTestCase(APITestCase):
             )
             self.client.cookies = response.cookies
             self.assertTrue('token' in response.data, 'user-student create must return token')
-            if i == 0:
+            if i == 1:
                 student_id = response.data['student_id']
 
         # Check: get list of 3 new users/students
         response = self.api_client.get(path='/api/v1/students')
-        self.assertTrue(len(response.data) == 3, 'list request must return 3 user/students')
+        self.assertTrue(
+            len(response.data) == MAX_STUDENTS,
+            f'list request must return {MAX_STUDENTS} user/students'
+        )
 
         # Update 1st users/student
         response = self.api_client.put(
             path=f'/api/v1/students/{student_id}',
-            data=json.dumps(
-                {
-                    "first_name": f"mutated",
-                }
-            ),
+            data=json.dumps({"first_name": f"mutated"}),
             content_type='application/json',
         )
         self.assertTrue(
@@ -107,11 +107,45 @@ class ApiTestCase(APITestCase):
             'get request must return empty data of the deleted 1st user/student'
         )
 
-    def test_user_profile_viewset(self):
-        self.assertEqual(1, 1, 'reason 1')
-
     def test_course_viewset(self):
-        self.assertEqual(1, 1, 'reason 2')
+        for i in range(1, MAX_COURSES+1):
+            mock_course = Course(
+                title=f'course_{i}',
+                number_of_lectures=MAX_LECTURES,
+                description=f'test{i}',
+                price=333.5
+            )
+            mock_course.save()
+            mock_course.refresh_from_db()
+            if i == 1:
+                course_id = mock_course.id
+            for j in range(1, MAX_LECTURES+1):
+                mock_lecture = Lecture(title=f'lecture_{i}_{j}', course=mock_course, number_in_course=j)
+                mock_lecture.save()
+                mock_course.refresh_from_db()
+
+        # Get list of all courses with lectures
+        response = self.api_client.get(path='/api/v1/courses')
+        # Check the result
+        self.assertTrue(
+            len(response.data) == MAX_COURSES,
+            f'list request must return {MAX_COURSES} courses each with {MAX_LECTURES} lectures'
+        )
+        self.assertTrue(
+            len(response.data[0]['lectures']) == MAX_LECTURES,
+            f'list of lectures in the first course must be contains {MAX_LECTURES} lectures'
+        )
+
+        # Get detailed of all courses with lectures
+        response = self.api_client.get(path=f'/api/v1/courses/{course_id}')
+        self.assertTrue(
+            response.status_code == 200,
+            'get course by id should not return error'
+        )
+        self.assertTrue(
+            response.data['title'] == 'course_1',
+            'get course by first id should return first title'
+        )
 
     def test_student_course_registration_viewset(self):
         self.assertEqual(1, 1, 'reason 3')

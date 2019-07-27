@@ -41,7 +41,7 @@ def check_permissions(request):
     """
     Instantiates and returns the list of permissions that this view requires.
     """
-    django_logger.info(f'user profile action request: "{request.action}"')
+    django_logger.info(f'api check permission for the action: "{request.action}"')
     if request.action in ('create', 'destroy', 'update'):
         permission_classes = (IsAdminUser,)
     elif request.action in ('retrieve', 'list'):
