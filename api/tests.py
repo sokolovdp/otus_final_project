@@ -66,7 +66,7 @@ class ApiTestCase(APITestCase):
             if i == 0:
                 student_id = response.data['student_id']
 
-        # get list of 3 users/students
+        # Check: get list of 3 new users/students
         response = self.api_client.get(path='/api/v1/students')
         self.assertTrue(len(response.data) == 3, 'list request must return 3 user/students')
 
@@ -84,8 +84,7 @@ class ApiTestCase(APITestCase):
             response.data['first_name'] == 'mutated',
             'update request must return user/student first_name'
         )
-
-        # retrieve 1st users/student updated info
+        # Check: retrieve 1st users/student updated info
         response = self.api_client.get(path=f'/api/v1/students/{student_id}')
         self.assertTrue(
             response.data['user']['first_name'] == 'mutated',
@@ -101,13 +100,12 @@ class ApiTestCase(APITestCase):
             response.status_code == 200,
             'delete request must return status 200'
         )
-
-        response = self.api_client.get(path='/api/v1/students')
-        print('\n\n-->', len(response.data), student_id)
-        for t in response.data:
-            print('student_id=', t['student_id'])
-
-        self.assertTrue(len(response.data) == 2, 'after delete list request must return 2 user/students')
+        # Check: retrieve 1st users/student should return empty data
+        response = self.api_client.get(path=f'/api/v1/students/{student_id}')
+        self.assertTrue(
+            response.data['user']['first_name'] == '',
+            'get request must return empty data of the deleted 1st user/student'
+        )
 
     def test_user_profile_viewset(self):
         self.assertEqual(1, 1, 'reason 1')
