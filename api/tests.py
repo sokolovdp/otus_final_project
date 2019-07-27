@@ -7,11 +7,11 @@ from django.contrib.auth.models import User
 from rest_framework.test import APIClient, APITestCase
 
 from main_page.models import (
-    StudentProfile,
     Course,
     Lecture,
-    CourseRegistration,
-    CourseSchedule,
+    # StudentProfile,
+    # CourseRegistration,
+    # CourseSchedule,
 )
 
 MAX_STUDENTS = 3
@@ -108,6 +108,7 @@ class ApiTestCase(APITestCase):
         )
 
     def test_course_viewset(self):
+        course_id = 0
         for i in range(1, MAX_COURSES+1):
             mock_course = Course(
                 title=f'course_{i}',
