@@ -9,8 +9,6 @@ from rest_framework.test import APIClient, APITestCase
 from main_page.models import (
     Course,
     Lecture,
-    # StudentProfile,
-    # CourseRegistration,
     # CourseSchedule,
 )
 
