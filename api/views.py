@@ -184,13 +184,12 @@ class StudentCourseRegistrationViewSet(ViewSet):
         return Response({'registration_id': self.registration.pk}, status=status.HTTP_200_OK)
 
     def destroy(self, request, pk=None):
-        self.validate_params_and_user(request)
+        self.registration = CourseRegistration.objects.filter(pk=pk)
         if self.registration:
             try:
                 self.registration.delete()
             except (DatabaseError, Exception) as e:
                 raise NotAcceptable(detail=str(e))
-
         return Response({}, status=status.HTTP_200_OK)
 
     def list(self, request):

@@ -196,9 +196,24 @@ class ApiTestCase(APITestCase):
         # Check the result
         self.assertTrue(
             len(response.data) == 1,
-            f'list registration must return status list of length == 1'
+            'list registration must return status list of length == 1'
         )
-
+        # Destroy registration
+        response = self.api_client.delete(
+            path=f'/api/v1/registration/{registration_id}'
+        )
+        # Check the result
+        self.assertTrue(
+            response.status_code == 200,
+            'delete registration must return status == 200'
+        )
+        response = self.api_client.get(
+            path=f'/api/v1/registration/{registration_id}'
+        )
+        self.assertTrue(
+            not response.data['student'] and not response.data['course']['title'],
+            'retrieve deleted registration must return empty data'
+        )
 
     def test_month_calendar_view(self):
         self.assertEqual(1, 1, 'reason 4')
