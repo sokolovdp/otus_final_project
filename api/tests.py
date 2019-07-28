@@ -168,7 +168,17 @@ class ApiTestCase(APITestCase):
         )
 
     def test_student_course_registration_viewset(self):
-        self.assertEqual(1, 1, 'reason 3')
+        student = self.create_students(1)[0]
+        course = self.create_courses_lectures(1, 1)[0].course
+        # Create course registration
+        response = self.api_client.post(
+            path=f'/api/v1/registration?student={student.student_id}&course={course.id}'
+        )
+        # Check the result
+        self.assertTrue(
+            'registration_id' in response.data,
+            f'create registration must return registration_id'
+        )
 
     def test_month_calendar_view(self):
         self.assertEqual(1, 1, 'reason 4')

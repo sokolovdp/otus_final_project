@@ -175,8 +175,9 @@ class StudentCourseRegistrationViewSet(ViewSet):
         self.validate_params_and_user(request)
         if not self.registration:
             try:
-                registration = CourseRegistration(student=self.student, course=self.course)
-                registration.save()
+                self.registration = CourseRegistration(student=self.student, course=self.course)
+                self.registration.save()
+                self.registration.refresh_from_db()
             except (DatabaseError, Exception) as e:
                 raise NotAcceptable(detail=str(e))
 
