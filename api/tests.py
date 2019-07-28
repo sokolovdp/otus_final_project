@@ -179,6 +179,16 @@ class ApiTestCase(APITestCase):
             'registration_id' in response.data,
             f'create registration must return registration_id'
         )
+        registration_id = response.data['registration_id']
+        response = self.api_client.get(
+            path=f'/api/v1/registration/{registration_id}'
+        )
+        # Check the result
+        self.assertTrue(
+            response.status_code == 200,
+            f'retrieve registration must return status == 200'
+        )
+
 
     def test_month_calendar_view(self):
         self.assertEqual(1, 1, 'reason 4')
