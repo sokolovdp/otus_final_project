@@ -179,6 +179,7 @@ class ApiTestCase(APITestCase):
             'registration_id' in response.data,
             f'create registration must return registration_id'
         )
+        # Retrieve registration
         registration_id = response.data['registration_id']
         response = self.api_client.get(
             path=f'/api/v1/registration/{registration_id}'
@@ -187,6 +188,15 @@ class ApiTestCase(APITestCase):
         self.assertTrue(
             response.status_code == 200,
             f'retrieve registration must return status == 200'
+        )
+        # List registrations
+        response = self.api_client.get(
+            path=f'/api/v1/registration'
+        )
+        # Check the result
+        self.assertTrue(
+            len(response.data) == 1,
+            f'list registration must return status list of length == 1'
         )
 
 
