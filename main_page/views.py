@@ -13,7 +13,7 @@ import django_rq
 from rest_framework.authtoken.models import Token
 
 from main_page.forms import UserForm, StudentProfileForm, MonthYearForm
-from main_page.models import Course, CourseRegistration, CourseSchedule
+from main_page.models import Course, CourseRegistration, CourseSchedule, StudentProfile
 from main_page.tasks import send_registration_confirmation_mail, send_course_begin_mails
 
 from otus_final_project.settings import django_logger
@@ -105,7 +105,7 @@ def user_register(request):
     return render(request, 'dj/registration.html', context=context)
 
 
-def get_student_registrations(student) -> set:
+def get_student_registrations(student: StudentProfile) -> set:
     if student:
         student_registrations = {
             cr.course.id for cr in

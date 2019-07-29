@@ -206,8 +206,11 @@ class MonthCourseCalendarView(APIView):
     params_serializer = MonthYearSerializer
 
     def get(self, request):
-        profile = request.user.student_profile
-        registrations = get_student_registrations(profile)
+        if hasattr(request.user, 'student_profile'):
+            profile = request.user.student_profile
+            registrations = get_student_registrations(profile)
+        else:
+            registrations = set()
 
         params_data = self.params_serializer(data=request.query_params)
         params_data.is_valid(raise_exception=True)

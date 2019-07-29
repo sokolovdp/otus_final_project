@@ -1,6 +1,6 @@
 import json
 from collections import namedtuple
-from datetime import date
+from datetime import date, timedelta
 # from django.test import TestCase
 # from django.test.client import Client
 from django.contrib.auth.models import User
@@ -221,4 +221,23 @@ class ApiTestCase(APITestCase):
         schedule.save()
         schedule.refresh_from_db()
 
-        self.assertEqual(1, 1, 'reason 4')
+        # Create student registration
+        response = self.api_client.post(
+            path=f'/api/v1/registration?student={student_id}&course={course.id}'
+        )
+        # Check the result
+        self.assertTrue(
+            'registration_id' in response.data,
+            f'create registration must return registration_id'
+        )
+
+        # Retrieve current month schedules
+        response = self.api_client.get(
+            path=f'/api/v1/calendar'
+        )
+        # Check the result
+        self.assertTrue(
+            response.status_code == 200,
+            'calendar must return status == 200'
+        )
+
