@@ -45,3 +45,9 @@ npm run build
 
 npm run proxy
 ```
+
+## To run API tests:
+```
+coverage run --source='.' manage.py test api
+
+```
