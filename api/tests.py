@@ -1,6 +1,6 @@
 import json
 from collections import namedtuple
-from datetime import date, timedelta
+from datetime import date
 # from django.test import TestCase
 # from django.test.client import Client
 from django.contrib.auth.models import User
