@@ -215,21 +215,11 @@ class ApiTestCase(APITestCase):
         )
 
     def test_month_calendar_view(self):
-        student_id = self.create_students(1)[0].student_id
+        _, student_id, student_token = self.create_students(1)[0]
         course = self.create_courses_lectures(1, 1)[0].course
         schedule = CourseSchedule(course=course, start_date=date.today())
         schedule.save()
         schedule.refresh_from_db()
-
-        # Create student registration
-        response = self.api_client.post(
-            path=f'/api/v1/registration?student={student_id}&course={course.id}'
-        )
-        # Check the result
-        self.assertTrue(
-            'registration_id' in response.data,
-            f'create registration must return registration_id'
-        )
 
         # Retrieve current month schedules
         response = self.api_client.get(
@@ -240,4 +230,20 @@ class ApiTestCase(APITestCase):
             response.status_code == 200,
             'calendar must return status == 200'
         )
+        self.assertTrue(
+            len(response.data) == 1,
+            'calendar in the current month has only 1 schedule'
+        )
+
+        self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + student_token)
+        # Create student registration
+        response = self.api_client.post(
+            path=f'/api/v1/registration?student={student_id}&course={course.id}'
+        )
+        # Check the result
+        self.assertTrue(
+            'registration_id' in response.data,
+            f'create registration must return registration_id'
+        )
+
 
