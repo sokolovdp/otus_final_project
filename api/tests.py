@@ -1,5 +1,6 @@
 import json
 from collections import namedtuple
+from datetime import date
 # from django.test import TestCase
 # from django.test.client import Client
 from django.contrib.auth.models import User
@@ -9,7 +10,7 @@ from rest_framework.test import APIClient, APITestCase
 from main_page.models import (
     Course,
     Lecture,
-    # CourseSchedule,
+    CourseSchedule,
 )
 
 MAX_STUDENTS = 3
@@ -214,4 +215,10 @@ class ApiTestCase(APITestCase):
         )
 
     def test_month_calendar_view(self):
+        student_id = self.create_students(1)[0].student_id
+        course = self.create_courses_lectures(1, 1)[0].course
+        schedule = CourseSchedule(course=course, start_date=date.today())
+        schedule.save()
+        schedule.refresh_from_db()
+
         self.assertEqual(1, 1, 'reason 4')
