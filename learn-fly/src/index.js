@@ -10,9 +10,6 @@ import {
   Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button
 } from 'reactstrap';
 
-// ReactDOM.render(<App />, document.getElementById('root'));
-
-
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
