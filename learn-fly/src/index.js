@@ -3,7 +3,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+import 'bootstrap/dist/css/bootstrap.css';
+import { Fragment } from 'react';
+import {
+  Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button
+} from 'reactstrap';
+
+// ReactDOM.render(<App />, document.getElementById('root'));
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
