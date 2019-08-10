@@ -89,3 +89,8 @@ venv.bak/
 # /npm
 node_modules/
 /yarn.lock
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/learn-fly/README.md
