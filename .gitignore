@@ -88,3 +88,4 @@ venv.bak/
 
 # /npm
 node_modules/
+/yarn.lock
