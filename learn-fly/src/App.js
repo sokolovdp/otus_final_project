@@ -5,7 +5,7 @@ import './App.css';
 
 import {Fragment} from 'react';
 import {
-    Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button,
+    Container, Alert, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button,
 } from 'reactstrap';
 
 
@@ -16,12 +16,19 @@ class activeUser {
     }
 }
 
+class pageTitleParams {
+    constructor(color, text) {
+        this.color = color;
+        this.text = text;
+    }
+}
 
 function App() {
     return (
         <div className="App">
             <MainHeader user={new activeUser("dima", false)}/>
-            <img src={main_page_pic} alt="main_pic"/>
+            <PageTitle params={new pageTitleParams('secondary', "Main page")} />
+            <PageContent content={'content'} />
         </div>
     );
 }
@@ -52,5 +59,27 @@ class MainHeader extends React.Component {
                 </Navbar>
             </Fragment>
         );
+    }
+}
+
+class PageTitle extends React.Component {
+    render() {
+        return (
+            <div>
+                <Alert color={this.props.params.color}>
+                    {this.props.params.text}
+                </Alert>
+            </div>
+        )
+    }
+}
+
+class PageContent extends React.Component {
+    render() {
+        return (
+            <Container>
+                {this.props.content}
+            </Container>
+        )
     }
 }
