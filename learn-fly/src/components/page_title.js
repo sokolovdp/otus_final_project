@@ -1,16 +1,36 @@
 import React from "react";
 import {Alert} from "reactstrap";
+import PropTypes from "prop-types";
 
-class PageTitle extends React.Component {
+export default class PageTitle extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.color = props.color;
+        this.text = props.text;
+    }
+
     render() {
         return (
             <div>
-                <Alert color={this.props.params.color}>
-                    {this.props.params.text}
+                <Alert color={this.color}>
+                    {this.text}
                 </Alert>
             </div>
         )
     }
 }
 
-export default PageTitle
+
+PageTitle.propTypes = {
+    user: PropTypes.shape({
+        color: PropTypes.string,
+        text: PropTypes.string
+    }),
+};
+
+
+PageTitle.defaultProps = {
+    color: 'secondary',
+    text: 'Main page'
+};

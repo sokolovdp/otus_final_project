@@ -2,8 +2,26 @@ import React from "react";
 import {Fragment} from 'react';
 import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
 import logo from "../dj.png";
+import PropTypes from "prop-types";
 
-class MainHeader extends React.Component {
+export default class MainHeader extends React.Component {
+    constructor(props) {
+        super(props);
+
+        // from parent
+        // this.state.loggedIn = props.loggedIn
+
+        this.state = {
+            loggedIn: false
+        }
+    }
+
+    handleChange() {
+        this.setState({
+            loggedIn: !this.state.loggedIn
+        });
+      }
+
     render() {
         return (
             <Fragment>
@@ -30,4 +48,24 @@ class MainHeader extends React.Component {
     }
 }
 
-export default MainHeader;
+
+MainHeader.propTypes = {
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        loggedIn: PropTypes.bool,
+        accountDetails: PropTypes.shape({
+            role: PropTypes.string,
+            email: PropTypes.string,
+        }),
+    }),
+};
+
+
+MainHeader.defaultProps = {
+    username: 'Unknown',
+    loggedIn: false,
+    accountDetails: {
+        role: 'Unknown',
+        email: 'Unknown'
+    }
+};
