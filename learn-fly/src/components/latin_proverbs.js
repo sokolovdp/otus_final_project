@@ -18,16 +18,9 @@ function random_in_range(range) {
     return Math.floor((Math.random() * range));
 }
 
-function replace_phrase(text) {
-    let header = document.querySelector(".proverb");
 
-    header.textContent = text;
-}
-
-function UpdateNavBar() {
+export default function getProverb() {
     let textIndex = random_in_range(LatinProverbs.length);
 
     return LatinProverbs[textIndex];
 }
-
-export default UpdateNavBar;

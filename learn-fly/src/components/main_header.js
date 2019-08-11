@@ -3,7 +3,7 @@ import {Fragment} from 'react';
 import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
 import logo from "../dj.png";
 import PropTypes from "prop-types";
-import UpdateNavBar from "./latin_proverbs";
+import getProverb from "./latin_proverbs";
 
 export default class MainHeader extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export default class MainHeader extends React.Component {
     }
 
     render() {
-        const proverb = UpdateNavBar();
+        const proverb = getProverb();
 
         return (
             <Fragment>
