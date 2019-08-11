@@ -1,6 +1,4 @@
-import App from "./App";
-
-var LatinProverbs = [
+const LatinProverbs = [
     "Acta non verba!",
     "Dum spiro, spero!",
     "Medice, cura te ipsum!",
