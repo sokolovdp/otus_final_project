@@ -32,10 +32,17 @@ export default class MainHeader extends React.Component {
                             <NavLink className="font-weight-bold" href="#">Login</NavLink>
                         </NavItem>
                     </Nav>
-                    {<span className="navbar-text mr-auto proverb">text</span>}
-                    {<span className="navbar-text right">Django & React Demo Site</span>}
+                    <Nav className="mx-auto" navbar>
+                        <NavItem className="d-flex align-items-center">
+                            {proverb}
+                        </NavItem>
+                    </Nav>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem className="d-flex align-items-center">
+                            Django & React Demo Site
+                        </NavItem>
+                    </Nav>
                 </Navbar>
-                {proverb}
             </Fragment>
         );
     }
