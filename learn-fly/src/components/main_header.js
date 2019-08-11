@@ -1,6 +1,6 @@
 import React from "react";
 import {Fragment} from 'react';
-import {Container, Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
+import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
 import logo from "../dj.png";
 
 class MainHeader extends React.Component {
