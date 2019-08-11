@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import UpdateNavBar from './latin_proverbs'
+import UpdateNavBar from './components/latin_proverbs'
 
 
 
