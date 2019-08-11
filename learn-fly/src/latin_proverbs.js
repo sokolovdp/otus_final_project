@@ -19,7 +19,7 @@ function random_in_range(range) {
 }
 
 function replace_phrase(text) {
-    let header = document.querySelector(".phrase");
+    let header = document.querySelector(".proverb");
 
     header.textContent = text;
 }

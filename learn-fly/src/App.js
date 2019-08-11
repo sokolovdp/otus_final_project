@@ -47,7 +47,7 @@ class MainHeader extends React.Component {
                             <NavLink className="font-weight-bold" href="#">Login</NavLink>
                         </NavItem>
                     </Nav>
-                    {<span className="navbar-text mr-auto phrase">Latin Proverb of the Day</span>}
+                    {<span className="navbar-text mr-auto proverb">Latin Proverb of the Day</span>}
                     {<span className="navbar-text right">Django & React Demo Site</span>}
                 </Navbar>
             </Fragment>
