@@ -8,19 +8,8 @@ export default class MainHeader extends React.Component {
     constructor(props) {
         super(props);
 
-        // from parent
-        // this.state.loggedIn = props.loggedIn
-
-        this.state = {
-            loggedIn: false
-        }
+        this.state = props;
     }
-
-    handleChange() {
-        this.setState({
-            loggedIn: !this.state.loggedIn
-        });
-      }
 
     render() {
         return (
@@ -48,7 +37,6 @@ export default class MainHeader extends React.Component {
     }
 }
 
-
 MainHeader.propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string,
@@ -60,12 +48,11 @@ MainHeader.propTypes = {
     }),
 };
 
-
 MainHeader.defaultProps = {
     username: 'Unknown',
     loggedIn: false,
     accountDetails: {
-        role: 'Unknown',
-        email: 'Unknown'
+        role: '',
+        email: ''
     }
 };
