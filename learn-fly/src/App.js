@@ -1,32 +1,56 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './dj.png';
+import main_page_pic from './main_page_picture.jpg';
 import './App.css';
 
-var activeUser = {
-  username: null,
-  authenticated: false,
-};
+import {Fragment} from 'react';
+import {
+    Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button,
+} from 'reactstrap';
+
+
+class activeUser {
+    constructor(username, authenticated) {
+        this.username = username;
+        this.authenticated = authenticated;
+    }
+}
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1><code>Learn to Fly </code></h1>
-        {/*<img src={logo} className="App-logo" alt="logo" />*/}
-        {/*<p>*/}
-        {/*  Edit <code>src/App.js</code> and save to reload.*/}
-        {/*</p>*/}
-        {/*<a*/}
-        {/*  className="App-link"*/}
-        {/*  href="https://reactjs.org"*/}
-        {/*  target="_blank"*/}
-        {/*  rel="noopener noreferrer"*/}
-        {/*>*/}
-        {/*  Learn React*/}
-        {/*</a>*/}
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <MainHeader user={new activeUser("dima", false)}/>
+            <img src={main_page_pic} alt="main_pic"/>
+        </div>
+    );
 }
 
 export default App;
+
+class MainHeader extends React.Component {
+    render() {
+        return (
+            <Fragment>
+                <Navbar expand="lg" color="grey" light mr-auto>
+                    <NavbarBrand href="/">
+                        <img src={logo} width="30" height="30" alt="brand"/>
+                    </NavbarBrand>
+                    <Nav className="mr-auto" navbar>
+                        <NavItem className="d-flex align-items-center">
+                            <NavLink className="font-weight-bold" href="/">Home</NavLink>
+                        </NavItem>
+                        <NavItem className="d-flex align-items-center">
+                            <NavLink className="font-weight-bold" href="#">Register</NavLink>
+                        </NavItem>
+                        <NavItem className="d-flex align-items-center">
+                            <NavLink className="font-weight-bold" href="#">Login</NavLink>
+                        </NavItem>
+                    </Nav>
+                    {<span className="navbar-text mr-auto phrase">Latin Proverb of the Day</span>}
+                    {<span className="navbar-text right">Django & React Demo Site</span>}
+                </Navbar>
+            </Fragment>
+        );
+    }
+}

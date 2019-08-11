@@ -5,10 +5,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import { Fragment } from 'react';
-import {
-  Container, Row, Col, Navbar, NavbarBrand, Nav, NavItem, NavLink, Button
-} from 'reactstrap';
+
+import UpdateNavBar from './latin_proverbs'
+
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
@@ -16,3 +16,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+UpdateNavBar();
