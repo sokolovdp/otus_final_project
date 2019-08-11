@@ -3,6 +3,7 @@ import {Fragment} from 'react';
 import {Nav, Navbar, NavbarBrand, NavItem, NavLink} from "reactstrap";
 import logo from "../dj.png";
 import PropTypes from "prop-types";
+import UpdateNavBar from "./latin_proverbs";
 
 export default class MainHeader extends React.Component {
     constructor(props) {
@@ -12,6 +13,8 @@ export default class MainHeader extends React.Component {
     }
 
     render() {
+        const proverb = UpdateNavBar();
+
         return (
             <Fragment>
                 <Navbar expand="lg" color="grey" light mr-auto>
@@ -29,9 +32,10 @@ export default class MainHeader extends React.Component {
                             <NavLink className="font-weight-bold" href="#">Login</NavLink>
                         </NavItem>
                     </Nav>
-                    {<span className="navbar-text mr-auto proverb">Latin Proverb of the Day</span>}
+                    {<span className="navbar-text mr-auto proverb">text</span>}
                     {<span className="navbar-text right">Django & React Demo Site</span>}
                 </Navbar>
+                {proverb}
             </Fragment>
         );
     }

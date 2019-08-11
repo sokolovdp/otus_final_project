@@ -28,7 +28,8 @@ function UpdateNavBar() {
     let textIndex = random_in_range(LatinProverbs.length);
     let phraseOfDay = LatinProverbs[textIndex];
 
-    replace_phrase(phraseOfDay);
+    // replace_phrase(phraseOfDay);
+    return phraseOfDay
 }
 
 export default UpdateNavBar;
