@@ -50,7 +50,7 @@ export default class MainHeader extends React.Component {
 
 MainHeader.propTypes = {
     user: PropTypes.shape({
-        name: PropTypes.string,
+        username: PropTypes.string,
         loggedIn: PropTypes.bool,
         accountDetails: PropTypes.shape({
             role: PropTypes.string,
@@ -66,4 +66,5 @@ MainHeader.defaultProps = {
         role: '',
         email: ''
     }
+
 };

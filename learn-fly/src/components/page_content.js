@@ -1,5 +1,7 @@
 import React from "react";
 import Jumbotron from "reactstrap/es/Jumbotron";
+import PropTypes from "prop-types";
+
 
 export default class PageContent extends React.Component {
     render() {
@@ -11,3 +13,12 @@ export default class PageContent extends React.Component {
         )
     }
 }
+
+
+PageContent.propTypes = {
+
+};
+
+PageContent.defaultProps = {
+
+};

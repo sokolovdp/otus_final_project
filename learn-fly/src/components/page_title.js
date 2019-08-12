@@ -23,7 +23,7 @@ export default class PageTitle extends React.Component {
 
 
 PageTitle.propTypes = {
-    user: PropTypes.shape({
+    params: PropTypes.shape({
         color: PropTypes.string,
         text: PropTypes.string
     }),
