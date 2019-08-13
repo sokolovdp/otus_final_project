@@ -39,7 +39,7 @@ python manage.py rqscheduler
 
 ## @mailgun https://www.mailgun.com/ is used as remote email server
 
-## Use nodejs, npm, and webpack to build FE and run webpack-dev-server
+## Use JS, nodejs, npm, and webpack to build FE and run webpack-dev-server
 ```
 npm run build
 
@@ -49,5 +49,11 @@ npm run proxy
 ## To run API tests:
 ```
 coverage run --source='.' manage.py test api
+
+```
+
+## FE in React, use *yarn* to build React application in the folder *learn-fly*, to run FE:
+```
+yarn start
 
 ```
