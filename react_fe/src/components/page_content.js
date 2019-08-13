@@ -27,6 +27,6 @@ PageContent.propTypes = {
 };
 
 PageContent.defaultProps = {
-    content: <img src={main_page_pic} className="img-fluid mx-auto d-block" alt="Responsive image"/>
+    content: <img src={main_page_pic} className="img-fluid mx-auto d-block" alt={"main-alt"}/>
     // content: <div>Some String</div>
 };

@@ -52,7 +52,7 @@ coverage run --source='.' manage.py test api
 
 ```
 
-## FE in React, use *yarn* to build React application in the folder *learn-fly*, to run FE:
+## FE in React, use *yarn* to build React application in the folder *react-fe*, to run FE:
 ```
 yarn start
 
