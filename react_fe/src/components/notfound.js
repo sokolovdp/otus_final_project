@@ -1,4 +1,15 @@
 import React from 'react'
+import {Alert} from "reactstrap";
 
-const Notfound = () => <h1>Not found</h1>
-export default Notfound
+
+export default class NotFound extends React.Component {
+    render() {
+        return (
+            <div>
+                <Alert color={"danger"}>
+                    <p className="text-center">{"404 - Page not found"}</p>
+                </Alert>
+            </div>
+        )
+    }
+}
