@@ -1,14 +1,13 @@
 import React from 'react';
-import './App.css';
 
 import MainHeader from './components/main_header'
 import PageTitle from './components/page_title'
 import PageContent from './components/page_content'
 
 
-function App() {
+function Main() {
     return (
-        <div className="App">
+        <div className="Main">
             <MainHeader/>
             <PageTitle/>
             <PageContent/>
@@ -16,4 +15,4 @@ function App() {
     );
 }
 
-export default App;
+export default Main;
