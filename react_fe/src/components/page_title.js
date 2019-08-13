@@ -14,7 +14,7 @@ export default class PageTitle extends React.Component {
         return (
             <div>
                 <Alert color={this.color}>
-                    {this.text}
+                    <p className="text-center">{this.text}</p>
                 </Alert>
             </div>
         )
@@ -32,5 +32,5 @@ PageTitle.propTypes = {
 
 PageTitle.defaultProps = {
     color: 'secondary',
-    text: 'Main page'
+    text: 'Initial page'
 };

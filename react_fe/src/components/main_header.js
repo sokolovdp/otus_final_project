@@ -17,7 +17,7 @@ export default class MainHeader extends React.Component {
 
         return (
             <Fragment>
-                <Navbar expand="lg" color="grey" light mr-auto>
+                <Navbar expand="lg" color="grey" light>
                     <NavbarBrand href="/">
                         <img src={logo} width="30" height="30" alt="brand"/>
                     </NavbarBrand>
