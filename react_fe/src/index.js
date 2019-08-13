@@ -4,7 +4,7 @@ import { Route, BrowserRouter as Router } from 'react-router-dom'  // Link,
 import * as serviceWorker from './serviceWorker';
 
 import Main from './Main';
-// import Register from './register';
+import Register from './components/register';
 // import Login from './login';
 // import Calendar from './calendar'
 import NotFound from './components/notfound'
@@ -15,7 +15,7 @@ const routing = (
   <Router>
     <div>
       <Route exact path="/" component={Main} />
-      {/*<Route path="/register" component={Register} />*/}
+      <Route path="/register" component={Register} />
       {/*<Route path="/login" component={Login} />*/}
       {/*<Route path="/calendar" component={Calendar} />*/}
       <Route component={NotFound} />
