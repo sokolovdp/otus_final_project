@@ -9,7 +9,10 @@ function Main() {
     return (
         <div className="Main">
             <MainHeader/>
-            <PageTitle/>
+            <PageTitle
+                color='secondary'
+                text='Main page'
+            />
             <PageContent/>
         </div>
     );

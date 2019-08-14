@@ -10,7 +10,10 @@ function Register() {
     return (
         <div className="Register">
             <MainHeader/>
-            <PageTitle params={{color: 'secondary', text: 'Register page'}}/>
+            <PageTitle
+                color = 'warning'
+                text = 'Register page'
+            />
             <PageContent/>
         </div>
     );

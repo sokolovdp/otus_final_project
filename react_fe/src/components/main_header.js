@@ -6,11 +6,11 @@ import PropTypes from "prop-types";
 import getProverb from "./latin_proverbs";
 
 export default class MainHeader extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = props;
-    }
+    // constructor(props) {
+    //     super(props);
+    //
+    //     // this.state = props;
+    // }
 
     render() {
         const proverb = getProverb();
