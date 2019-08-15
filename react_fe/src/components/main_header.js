@@ -26,7 +26,7 @@ export default class MainHeader extends React.Component {
                             <NavLink className="font-weight-bold" href="/">Home</NavLink>
                         </NavItem>
                         <NavItem className="d-flex align-items-center">
-                            <NavLink className="font-weight-bold" href="#">Register</NavLink>
+                            <NavLink className="font-weight-bold" href="/register">Register</NavLink>
                         </NavItem>
                         <NavItem className="d-flex align-items-center">
                             <NavLink className="font-weight-bold" href="#">Login</NavLink>
