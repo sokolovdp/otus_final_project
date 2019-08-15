@@ -1,5 +1,4 @@
 import React from 'react'
-import {Alert} from "reactstrap";
 
 import MainHeader from './main_header'
 import PageTitle from './page_title'
