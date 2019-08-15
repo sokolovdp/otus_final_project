@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, BrowserRouter as Router } from 'react-router-dom'  // Link,
+import {Route, BrowserRouter, Switch} from 'react-router-dom'  // Link,
 import * as serviceWorker from './serviceWorker';
 
 import Main from './Main';
@@ -12,15 +12,17 @@ import NotFound from './components/notfound'
 import 'bootstrap/dist/css/bootstrap.css';
 
 const routing = (
-  <Router>
-    <div>
-      <Route exact path="/" component={Main} />
-      <Route path="/register" component={Register} />
-      {/*<Route path="/login" component={Login} />*/}
-      {/*<Route path="/calendar" component={Calendar} />*/}
-      <Route component={NotFound} />
-    </div>
-  </Router>
+    <BrowserRouter>
+        <div>
+            <Switch>
+                <Route exact path="/" component={Main}/>
+                <Route path="/register" component={Register}/>
+                {/*<Route path="/login" component={Login} />*/}
+                {/*<Route path="/calendar" component={Calendar} />*/}
+                <Route component={NotFound}/>
+            </Switch>
+        </div>
+    </BrowserRouter>
 );
 
 

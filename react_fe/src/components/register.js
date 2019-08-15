@@ -5,7 +5,7 @@ import PageTitle from './page_title'
 import PageContent from './page_content'
 
 
-function Register() {
+export default function Register() {
 
     return (
         <div className="Register">
@@ -18,5 +18,3 @@ function Register() {
         </div>
     );
 }
-
-export default Register;

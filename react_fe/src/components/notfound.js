@@ -1,8 +1,12 @@
 import React from 'react'
 import {Alert} from "reactstrap";
 
+import MainHeader from './main_header'
+import PageTitle from './page_title'
+import PageContent from './page_content'
 
-export default class NotFound extends React.Component {
+
+class Error404 extends React.Component {
     render() {
         return (
             <div>
@@ -12,4 +16,20 @@ export default class NotFound extends React.Component {
             </div>
         )
     }
+}
+
+export default function NotFound() {
+
+    return (
+        <div className="Register">
+            <MainHeader/>
+            <PageTitle
+                color = 'danger'
+                text = 'Error'
+            />
+            <PageContent
+                content = {Error404}
+            />
+        </div>
+    );
 }
