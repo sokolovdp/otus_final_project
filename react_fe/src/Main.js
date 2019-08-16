@@ -5,7 +5,8 @@ import PageTitle from './components/page_title'
 import PageContent from './components/page_content'
 
 
-function Main() {
+function Main(...props) {
+    // console.log(props)
     return (
         <div className="Main">
             <MainHeader/>

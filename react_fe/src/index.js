@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker';
 
 import Main from './Main';
 import Register from './components/register';
-// import Login from './login';
+import Login from './components/login';
 // import Calendar from './calendar'
 import NotFound from './components/notfound'
 
@@ -17,7 +17,7 @@ const routing = (
             <Switch>
                 <Route exact path="/" component={Main}/>
                 <Route path="/register" component={Register}/>
-                {/*<Route path="/login" component={Login} />*/}
+                <Route path="/login" component={Login} />
                 {/*<Route path="/calendar" component={Calendar} />*/}
                 <Route component={NotFound}/>
             </Switch>

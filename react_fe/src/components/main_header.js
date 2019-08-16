@@ -29,7 +29,7 @@ export default class MainHeader extends React.Component {
                             <NavLink className="font-weight-bold" href="/register">Register</NavLink>
                         </NavItem>
                         <NavItem className="d-flex align-items-center">
-                            <NavLink className="font-weight-bold" href="#">Login</NavLink>
+                            <NavLink className="font-weight-bold" href="/login">Login</NavLink>
                         </NavItem>
                     </Nav>
                     <Nav className="mx-auto" navbar>
