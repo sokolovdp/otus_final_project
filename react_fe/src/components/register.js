@@ -2,7 +2,7 @@ import React from 'react';
 
 import MainHeader from './main_header'
 import PageTitle from './page_title'
-import PageContent from './page_content'
+import RegistrationForm from "./registration_form";
 
 
 export default function Register() {
@@ -14,7 +14,7 @@ export default function Register() {
                 color = 'warning'
                 text = 'Register page'
             />
-            <PageContent/>
+            <RegistrationForm/>
         </div>
     );
 }
