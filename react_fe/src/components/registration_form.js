@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Row, Button, Form, FormGroup, Label, Input, Nav} from 'reactstrap';
+import {Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Jumbotron from "reactstrap/es/Jumbotron";
 
 export default class RegistrationForm extends React.Component {
