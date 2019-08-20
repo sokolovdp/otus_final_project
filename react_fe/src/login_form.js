@@ -43,7 +43,7 @@ export default class LoginForm extends React.Component {
         event.preventDefault();
         let jsonData = JSON.stringify(this.state)
 
-        fetch('/api/get_auth_token', {method: 'POST', body: jsonData})
+        fetch('/api/v1/get_auth_token', {method: 'POST', body: jsonData})
             .then(response => checkResponseStatus(response))
             .then(result => {
                 storeToken(result)
