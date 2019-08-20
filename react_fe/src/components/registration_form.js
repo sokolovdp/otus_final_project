@@ -1,17 +1,17 @@
 import React from 'react';
-import {Col, Row, Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Col, Row, Button, Form, FormGroup, Label, Input, Nav} from 'reactstrap';
 import Jumbotron from "reactstrap/es/Jumbotron";
 
 export default class RegistrationForm extends React.Component {
     render() {
         return (
             <Jumbotron>
-            <Form className="mx-auto">
+            <Form>
                 <Row form>
                     <Col  md={3}>
                         <FormGroup>
                             <Label for="formUsername">Username</Label>
-                            <Input type="text" name="city" id="formUsername"/>
+                            <Input type="text" name="city" id="formUsername" placeholder="username to login"/>
                         </FormGroup>
                     </Col>
                     <Col  md={3}>
@@ -21,7 +21,7 @@ export default class RegistrationForm extends React.Component {
                         </FormGroup>
                     </Col>
                 </Row>
-                <Row form className="mx-auto">
+                <Row form>
                     <Col md={2}>
                         <FormGroup>
                             <Label for="formEmail">Email</Label>

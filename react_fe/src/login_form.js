@@ -1,20 +1,23 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import Jumbotron from "reactstrap/es/Jumbotron";
 
 export default class LoginForm extends React.Component {
-  render() {
-    return (
-      <Form inline>
-        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="userName" className="mr-sm-2">Email</Label>
-          <Input type="text" name="username" id="userName" placeholder="something" />
-        </FormGroup>
-        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="examplePassword" className="mr-sm-2">Password</Label>
-          <Input type="password" name="password" id="examplePassword" placeholder="don't tell!" />
-        </FormGroup>
-        <Button>Submit</Button>
-      </Form>
-    );
-  }
+    render() {
+        return (
+            <Jumbotron>
+                <Form inline>
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                        <Label for="userName" className="mr-sm-2">Username</Label>
+                        <Input type="text" name="username" id="userName"/>
+                    </FormGroup>
+                    <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                        <Label for="formPassword" className="mr-sm-2">Password</Label>
+                        <Input type="password" name="password" id="formPassword"/>
+                    </FormGroup>
+                    <Button>Submit</Button>
+                </Form>
+            </Jumbotron>
+        );
+    }
 }
