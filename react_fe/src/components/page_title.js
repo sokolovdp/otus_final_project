@@ -11,7 +11,6 @@ export default class PageTitle extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <Alert color={this.color}>

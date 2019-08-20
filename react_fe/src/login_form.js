@@ -29,11 +29,7 @@ export default class LoginForm extends React.Component {
     render() {
         return (
             <Jumbotron>
-                <Form inline
-                      action={this.props.action}
-                      method={this.props.method}
-                      onSubmit={this.submitForm}
-                >
+                <Form inline onSubmit={this.submitForm}>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="userName" className="mr-sm-2">Username</Label>
                         <Input type="text" name="username" id="userName" onChange={this.handleChange}
