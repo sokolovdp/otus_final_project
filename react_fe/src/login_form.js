@@ -2,6 +2,28 @@ import React from 'react';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Jumbotron from "reactstrap/es/Jumbotron";
 
+
+
+function failGetFunction(error) {
+    console.error(error)
+}
+
+function checkResponseStatus(response) {
+    let json = {};
+
+    if (response.status > 299) {
+        // make the promise be rejected if we didn't get a 200 response
+        throw new Error("API response status: " + response.status)
+    } else {
+        json = response.json()
+    }
+    return json
+}
+
+function storeToken(json) {
+    sessionStorage.setItem('apiToken', json.token);
+}
+
 export default class LoginForm extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -19,10 +41,14 @@ export default class LoginForm extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
-        const username = this.state.username;
-        const password = this.state.password;
+        let jsonData = JSON.stringify(this.state)
 
-        console.log(username + ' & ' + password)
+        fetch('/api/get_auth_token', {method: 'POST', body: jsonData})
+            .then(response => checkResponseStatus(response))
+            .then(result => {
+                storeToken(result)
+            })
+            .catch(error => failGetFunction(error));
 
     }
 
@@ -37,7 +63,7 @@ export default class LoginForm extends React.Component {
                     </FormGroup>
                     <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                         <Label for="userPassword" className="mr-sm-2">Password</Label>
-                        <Input type="password" name="password"  id="userPassword" onChange={this.handleChange}
+                        <Input type="password" name="password" id="userPassword" onChange={this.handleChange}
                         />
                     </FormGroup>
                     <Button>Submit</Button>
