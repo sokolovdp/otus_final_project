@@ -1,35 +1,33 @@
 import React from 'react';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import Jumbotron from "reactstrap/es/Jumbotron";
+import {Redirect} from 'react-router-dom'
 
+//
+// function failGetFunction(error) {
+//     console.error(error)
+// }
+//
+// function checkResponseStatus(response) {
+//     let json = {};
+//
+//     if (response.status > 299) {
+//         // make the promise be rejected if we didn't get a 200 response
+//         throw new Error("API response status: " + response.status)
+//     } else {
+//         json = response.json()
+//     }
+//     return json
+// }
 
-
-function failGetFunction(error) {
-    console.error(error)
-}
-
-function checkResponseStatus(response) {
-    let json = {};
-
-    if (response.status > 299) {
-        // make the promise be rejected if we didn't get a 200 response
-        throw new Error("API response status: " + response.status)
-    } else {
-        json = response.json()
-    }
-    return json
-}
-
-function storeToken(json) {
-    sessionStorage.setItem('apiToken', json.token);
-}
 
 export default class LoginForm extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            isAuthenticated: false,
         };
         this.submitForm = this.submitForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -41,18 +39,31 @@ export default class LoginForm extends React.Component {
 
     submitForm(event) {
         event.preventDefault();
-        let jsonData = JSON.stringify(this.state)
+        // let jsonData = JSON.stringify(this.state);
 
-        fetch('/api/v1/get_auth_token', {method: 'POST', body: jsonData})
-            .then(response => checkResponseStatus(response))
-            .then(result => {
-                storeToken(result)
-            })
-            .catch(error => failGetFunction(error));
+        // fetch('/api/v1/get_auth_token', {method: 'POST', body: jsonData})
+        //     .then(response => checkResponseStatus(response))
+        //     .then(result => {
+        //         let token = result.token;
+        //         let username = this.state.username
+        //         sessionStorage.setItem('username', username);
+        //         sessionStorage.setItem('token', token);
+        //     })
+        //     .catch(error => failGetFunction(error));
 
+        sessionStorage.setItem('userName', this.state.username);
+        sessionStorage.setItem('Token', '----token----');
+        sessionStorage.setItem('isAuthenticated', true);
+        this.setState({isAuthenticated: true});
+
+        // window.open("/");
+        // this.props.history.push('/');
     }
 
     render() {
+        if (this.state.isAuthenticated)
+            return <Redirect to="/"/>;
+
         return (
             <Jumbotron>
                 <Form inline onSubmit={this.submitForm}>
