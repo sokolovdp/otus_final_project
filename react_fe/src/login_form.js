@@ -53,11 +53,9 @@ export default class LoginForm extends React.Component {
 
         sessionStorage.setItem('userName', this.state.username);
         sessionStorage.setItem('Token', '----token----');
-        sessionStorage.setItem('isAuthenticated', true);
+        sessionStorage.setItem('isAuthenticated', 'true');
         this.setState({isAuthenticated: true});
 
-        // window.open("/");
-        // this.props.history.push('/');
     }
 
     render() {
