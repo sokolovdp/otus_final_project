@@ -56,7 +56,6 @@ export default class LoginForm extends React.Component {
         localStorage.setItem('token', '----token----');
         localStorage.setItem('loggedIn', 'true');
         this.setState({loggedIn: true});
-
     }
 
     render() {
