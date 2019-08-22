@@ -7,8 +7,10 @@ import Main from './Main';
 import Register from './components/register';
 import Login from './components/login';
 import Logout from './components/logout';
-// import Calendar from './calendar'
 import NotFound from './components/notfound'
+// import Calendar from './calendar'
+// import Courses from './courses'
+
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -28,8 +30,9 @@ const routing = (
                 <Route path="/register" component={Register}/>
                 <Route path="/login" component={Login} />
                 <Route path="/logout" component={Logout} />
+                {/*<Route path="/courses" component={Courses} />*/}
                 {/*<Route path="/calendar" component={Calendar} />*/}
-                <Route component={NotFound}/>
+                <Route path="*" component={NotFound}/>
             </Switch>
         </div>
     </BrowserRouter>
