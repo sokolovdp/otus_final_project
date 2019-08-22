@@ -11,6 +11,14 @@ import NotFound from './components/notfound'
 
 import 'bootstrap/dist/css/bootstrap.css';
 
+// Initialize Local Storage with User Data
+if (localStorage.getItem('userName' == null))
+    localStorage.setItem('userName', 'Unknown');
+if (localStorage.getItem('token' == null))
+    localStorage.setItem('token', '');
+if (localStorage.getItem('loggedIn' == null))
+    localStorage.setItem('loggedIn', 'false');
+
 const routing = (
     <BrowserRouter>
         <div>
@@ -24,7 +32,6 @@ const routing = (
         </div>
     </BrowserRouter>
 );
-
 
 ReactDOM.render(routing, document.getElementById('root'));
 

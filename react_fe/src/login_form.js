@@ -27,7 +27,7 @@ export default class LoginForm extends React.Component {
         this.state = {
             username: '',
             password: '',
-            isAuthenticated: false,
+            loggedIn: false,
         };
         this.submitForm = this.submitForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -51,15 +51,15 @@ export default class LoginForm extends React.Component {
         //     })
         //     .catch(error => failGetFunction(error));
 
-        sessionStorage.setItem('userName', this.state.username);
-        sessionStorage.setItem('Token', '----token----');
-        sessionStorage.setItem('isAuthenticated', 'true');
-        this.setState({isAuthenticated: true});
+        localStorage.setItem('userName', this.state.username);
+        localStorage.setItem('token', '----token----');
+        localStorage.setItem('loggedIn', 'true');
+        this.setState({loggedIn: true});
 
     }
 
     render() {
-        if (this.state.isAuthenticated)
+        if (this.state.loggedIn)
             return <Redirect to="/"/>;
 
         return (
