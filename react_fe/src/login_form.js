@@ -28,6 +28,7 @@ export default class LoginForm extends React.Component {
             username: '',
             password: '',
             loggedIn: false,
+            token: ''
         };
         this.submitForm = this.submitForm.bind(this);
         this.handleChange = this.handleChange.bind(this);

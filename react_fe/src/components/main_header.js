@@ -26,7 +26,7 @@ export default class MainHeader extends React.Component {
                                 <NavLink className="font-weight-bold" href="">logged as: {userName}</NavLink>
                             </NavItem>
                             <NavItem className="d-flex align-items-center">
-                                <NavLink className="font-weight-bold" href="/login">Logout</NavLink>
+                                <NavLink className="font-weight-bold" href="/logout">Logout</NavLink>
                             </NavItem>
                         </Nav>
                         <Nav className="mx-auto" navbar>
