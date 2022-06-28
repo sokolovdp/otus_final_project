@@ -1,6 +1,6 @@
 argon2==0.1.10
 argon2-cffi==19.1.0
-arrow==0.14.2
+arrow==0.15.1
 cffi==1.12.3
 Click==7.0
 croniter==0.3.30
